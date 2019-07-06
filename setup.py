@@ -8,15 +8,24 @@ def read(fname):
 
 
 setup(
-    name='<your-pypi-package-name>',
+    name='census-map-downloader',
     version='0.0.1',
-    description="<your-repo-description>",
+    description="Easily download U.S. census maps",
     long_description=read('README.rst'),
     author='Los Angeles Times Data Desk',
     author_email='datadesk@latimes.com',
-    url='http://www.github.com/datadesk/<your-repo-slug>',
+    url='http://www.github.com/datadesk/census-map-downloader',
     license="MIT",
-    packages=("<your-python-module-name>",),
+    packages=("census_map_downloader",),
+    install_requires=(
+        "geopandas",
+        "us",
+        "click"
+    ),
+    entry_points="""
+        [console_scripts]
+        censusmapdownloader=census_map_downloader.cli:cmd
+    """,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python',
@@ -26,7 +35,7 @@ setup(
     ],
     project_urls={
         'Maintainer': 'https://github.com/datadesk',
-        'Source': 'https://github.com/datadesk/<your-repo-slug>',
-        'Tracker': 'https://github.com/datadesk/<your-repo-slug>/issues'
+        'Source': 'https://github.com/datadesk/census-map-downloader',
+        'Tracker': 'https://github.com/datadesk/census-map-downloader/issues'
     },
 )

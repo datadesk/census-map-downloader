@@ -9,6 +9,9 @@ flake8 = "*"
 coverage = "*"
 
 [packages]
+geopandas = "*"
+us = "*"
+click = "*"
 
 [requires]
 python_version = "3.6"
