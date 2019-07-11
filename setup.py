@@ -16,7 +16,10 @@ setup(
     author_email='datadesk@latimes.com',
     url='http://www.github.com/datadesk/census-map-downloader',
     license="MIT",
-    packages=("census_map_downloader",),
+    packages=(
+        "census_map_downloader",
+        "census_map_downloader.geotypes",
+    ),
     install_requires=(
         "geopandas",
         "us",
