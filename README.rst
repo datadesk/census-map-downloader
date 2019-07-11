@@ -1,5 +1,5 @@
-python-open-source-template
-===========================
+census-map-downloader
+=====================
 
 A template for open-source Python software repositories
 
