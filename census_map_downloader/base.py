@@ -33,6 +33,9 @@ class BaseDownloader(object):
             self.processed_dir.mkdir()
 
         # Set file paths
+        self.set_paths()
+
+    def set_paths(self):
         self.shp_name = self.zip_name.replace(".zip", ".shp")
         self.shp_path = self.raw_dir.joinpath(self.shp_name)
         self.zip_path = self.raw_dir.joinpath(self.zip_name)
@@ -69,14 +72,19 @@ class BaseDownloader(object):
             return
 
         # If not, unzip it now.
-        logger.debug(f"Unzipping {self.zip_path} to {self.data_dir}")
+        logger.debug(f"Unzipping {self.zip_path} to {self.raw_dir}")
         with zipfile.ZipFile(self.zip_path, "r") as z:
-            z.extractall(self.data_dir)
+            z.extractall(self.raw_dir)
 
     def process(self):
         """
         Refine the raw data and convert it to our preferred format, GeoJSON.
         """
+        # Check if the geojson file already exists
+        if self.geojson_path.exists():
+            logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
+            return
+
         gdf = gpd.read_file(self.shp_path)
         logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
         gdf.to_file(self.geojson_path, driver="GeoJSON")

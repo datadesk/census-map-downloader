@@ -14,6 +14,13 @@ def cmd(ctx, data_dir="./"):
     ctx.obj['data_dir'] = data_dir
 
 
+@cmd.command(help="Download places")
+@click.pass_context
+def places(ctx):
+    obj = census_map_downloader.USPlaceDownloader2018()
+    obj.run()
+
+
 @cmd.command(help="Download tracts")
 @click.pass_context
 def tracts(ctx):
