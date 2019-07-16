@@ -85,6 +85,7 @@ class BaseDownloader(object):
             logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
             return
 
+        # Write out GeoJSON file
         gdf = gpd.read_file(self.shp_path)
         logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
         gdf.to_file(self.geojson_path, driver="GeoJSON")

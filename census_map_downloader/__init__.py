@@ -1,12 +1,14 @@
 from .base import BaseDownloader
-from .geotypes.counties import CountyDownloader2018
-from .geotypes.places import USPlaceDownloader2018
-from .geotypes.tracts import USTractDownloader2010
+from .geotypes.counties import CountiesDownloader2018
+from .geotypes.places import PlacesDownloader2018
+from .geotypes.tracts import TractsDownloader2010
+from .geotypes.zctas import ZctasDownloader2018
 
 
 __all__ = (
     "BaseDownloader",
-    "CountyDownloader2018",
-    "USPlaceDownloader2018",
-    "USTractDownloader2010",
+    "CountiesDownloader2018",
+    "PlacesDownloader2018",
+    "TractsDownloader2010",
+    "ZctasDownloader2018",
 )

@@ -9,7 +9,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StateTractDownloader2010(BaseDownloader):
+class StateTractsDownloader2010(BaseDownloader):
     """
     Download 2010 tracts for a single state.
     """
@@ -27,7 +27,7 @@ class StateTractDownloader2010(BaseDownloader):
         return f"tl_2010_{self.state.fips}_tract10.zip"
 
 
-class StateTractDownloader2000(StateTractDownloader2010):
+class StateTractsDownloader2000(StateTractsDownloader2010):
     """
     Download 2000 tracts for a single state.
     """
@@ -44,7 +44,7 @@ class StateTractDownloader2000(StateTractDownloader2010):
         return f"{self.state.fips}_{self.state.name.upper().replace(' ', '_')}"
 
 
-class USTractDownloader2010(BaseDownloader):
+class TractsDownloader2010(BaseDownloader):
     """
     Download all 2010 tracts in the United States.
     """

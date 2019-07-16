@@ -14,9 +14,10 @@ def main():
     formatter = logging.Formatter('%(asctime)s|%(name)s|%(levelname)s|%(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    census_map_downloader.USPlaceDownloader2018().run()
+    # census_map_downloader.USPlaceDownloader2018().run()
     # census_map_downloader.USTractDownloader2010()
-    census_map_downloader.CountyDownloader2018().run()
+    # census_map_downloader.CountyDownloader2018().run()
+    census_map_downloader.ZctasDownloader2018().run()
 
 
 if __name__ == '__main__':

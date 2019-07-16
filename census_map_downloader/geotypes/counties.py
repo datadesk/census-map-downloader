@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class CountyDownloader2018(BaseDownloader):
+class CountiesDownloader2018(BaseDownloader):
     """
     Download counties.
     """

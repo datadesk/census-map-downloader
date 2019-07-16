@@ -9,7 +9,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StatePlaceDownloader2018(BaseDownloader):
+class StatePlacesDownloader2018(BaseDownloader):
     """
     Download 2018 places for a single state.
     """
@@ -39,7 +39,7 @@ class StatePlaceDownloader2018(BaseDownloader):
         return f"tl_{self.YEAR}_{self.state.fips}_place.zip"
 
 
-class USPlaceDownloader2018(BaseDownloader):
+class PlacesDownloader2018(BaseDownloader):
     """
     Download all 2010 tracts in the United States.
     """
