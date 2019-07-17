@@ -59,7 +59,7 @@ class TractsDownloader2010(BaseDownloader):
         path_list = []
         for state in us.STATES:
             logger.debug(f"Downloading {state}")
-            shp_path = StateTractDownloader2010(
+            shp_path = StateTractsDownloader2010(
                 state.abbr,
                 data_dir=self.data_dir
             ).run()

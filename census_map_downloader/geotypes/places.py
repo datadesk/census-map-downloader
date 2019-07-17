@@ -67,7 +67,7 @@ class PlacesDownloader2018(BaseDownloader):
         path_list = []
         for state in us.STATES:
             logger.debug(f"Downloading {state}")
-            shp_path = StatePlaceDownloader2018(
+            shp_path = StatePlacesDownloader2018(
                 state.abbr,
                 data_dir=self.data_dir
             ).run()

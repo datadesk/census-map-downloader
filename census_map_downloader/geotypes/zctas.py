@@ -45,16 +45,16 @@ class ZctasDownloader2018(BaseDownloader):
         """
         Refine the raw data and convert it to our preferred format, GeoJSON.
         """
-        #Write out national file
+        # Write out national file
         super().process()
 
         gdf = gpd.read_file(self.shp_path)
-        #Read relationship file 
-        df = pd.read_csv(self.relationship_path, usecols=['ZCTA5','STATE'], dtype={'ZCTA5':str,'STATE':str})
+        # Read relationship file
+        df = pd.read_csv(self.relationship_path, usecols=['ZCTA5', 'STATE'], dtype={'ZCTA5': str, 'STATE': str})
 
-        #Loop through the 50 states and write out a GeoJSON for each
+        # Loop through the 50 states and write out a GeoJSON for each
         for state in us.STATES:
-            state_df = gdf[gdf.ZCTA5CE10.isin(df.loc[df.STATE ==state.fips,'ZCTA5'])]
+            state_df = gdf[gdf.ZCTA5CE10.isin(df.loc[df.STATE == state.fips, 'ZCTA5'])]
             state_geojson_path = self.processed_dir.joinpath(f"2018_zctas_{state}.geojson")
 
             logger.debug(f"Writing out {len(state_df)} shapes in {state} to {state_geojson_path}")
