@@ -45,27 +45,17 @@ class ZctasDownloader2018(BaseDownloader):
         """
         Refine the raw data and convert it to our preferred format, GeoJSON.
         """
-        # Write out SHP file
-       
+        #Write out national file
         super().process()
 
         gdf = gpd.read_file(self.shp_path)
+        #Read relationship file 
         df = pd.read_csv(self.relationship_path, usecols=['ZCTA5','STATE'], dtype={'ZCTA5':str,'STATE':str})
-        # Merge the two
-        # merged = gdf.merge(df, how='outer', left_on='ZCTA5CE10', right_on='ZCTA5') #some don't have corresponding state
-
-        # Check if the geojson file already exists
-        # if self.geojson_path.exists():
-        #     logger.debug(f"GeoJSON file already exists at {self.geojson_path}") 
-        # else:
-        #     logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
-        #     merged.to_file(self.geojson_path, driver="GeoJSON")
 
         #Loop through the 50 states and write out a GeoJSON for each
         for state in us.STATES:
-            # state_df = merged[merged.STATE == state.fips]
             state_df = gdf[gdf.ZCTA5CE10.isin(df.loc[df.STATE ==state.fips,'ZCTA5'])]
-            state_geojson_path = self.processed_dir.joinpath(f"{state}_zctas_2018.geojson")#is this naming okay
+            state_geojson_path = self.processed_dir.joinpath(f"2018_zctas_{state}.geojson")
 
             logger.debug(f"Writing out {len(state_df)} shapes in {state} to {state_geojson_path}")
             state_df.to_file(state_geojson_path, driver="GeoJSON")
