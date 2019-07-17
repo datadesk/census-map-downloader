@@ -3,6 +3,15 @@ census-map-downloader
 
 Easily download U.S. census maps
 
+
+Installation
+------------
+
+::
+
+    pipenv install census-map-downloader
+
+
 Command line usage
 ------------------
 
