@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import us
+import pandas as pd
+import geopandas as gpd
 from urllib.request import urlretrieve
 from census_map_downloader.base import BaseDownloader
 
@@ -27,7 +29,7 @@ class ZctasDownloader2018(BaseDownloader):
         # Set all the normals paths
         super().set_paths()
         # Add a raw download path for the relationships files
-        self.relationship_name = ""
+        self.relationship_name = "zcta_county_rel_10.txt"
         self.relationship_path = self.raw_dir.joinpath(self.relationship_name)
 
     def download(self):
@@ -35,33 +37,35 @@ class ZctasDownloader2018(BaseDownloader):
         super().download()
         # Also download the relationship file that connects ZCTAs to counties
         # If it doesn't, download it from the Census FTP
-        relationship_url = ""
-        logger.debug(f"Downloading {self.relationship_url} to {self.zip_path}")
-        urlretrieve(relationship_url, self.relationship_path)
+        self.relationship_url = "https://www2.census.gov/geo/docs/maps-data/data/rel/zcta_county_rel_10.txt"
+        logger.debug(f"Downloading {self.relationship_url} to {self.relationship_path}")
+        urlretrieve(self.relationship_url, self.relationship_path)
 
     def process(self):
         """
         Refine the raw data and convert it to our preferred format, GeoJSON.
         """
         # Write out SHP file
+       
+        super().process()
+
         gdf = gpd.read_file(self.shp_path)
-
-        # Read in the relationship file
-        df = pd.read_csv(self.relationship_path)
-
+        df = pd.read_csv(self.relationship_path, usecols=['ZCTA5','STATE'], dtype={'ZCTA5':str,'STATE':str})
         # Merge the two
-        merged = pd.merge()
+        # merged = gdf.merge(df, how='outer', left_on='ZCTA5CE10', right_on='ZCTA5') #some don't have corresponding state
 
-        Check if the geojson file already exists
-        if self.geojson_path.exists():
-            logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
-        else:
-            logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
-            merged.to_file(self.geojson_path, driver="GeoJSON")
+        # Check if the geojson file already exists
+        # if self.geojson_path.exists():
+        #     logger.debug(f"GeoJSON file already exists at {self.geojson_path}") 
+        # else:
+        #     logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
+        #     merged.to_file(self.geojson_path, driver="GeoJSON")
 
-        # Loop through the 50 states and write out a GeoJSON for each
+        #Loop through the 50 states and write out a GeoJSON for each
         for state in us.STATES:
-            state_df = merged[merged.FIPS == state.fips]
-            state_geojson_path = f""
-            logger.debug(f"Writing out {len(state_df)} shapes in {{state}} to {state_geojson_path}")
-            merged.to_file(state_geojson_path, driver="GeoJSON")
+            # state_df = merged[merged.STATE == state.fips]
+            state_df = gdf[gdf.ZCTA5CE10.isin(df.loc[df.STATE ==state.fips,'ZCTA5'])]
+            state_geojson_path = self.processed_dir.joinpath(f"{state}_zctas_2018.geojson")#is this naming okay
+
+            logger.debug(f"Writing out {len(state_df)} shapes in {state} to {state_geojson_path}")
+            state_df.to_file(state_geojson_path, driver="GeoJSON")
