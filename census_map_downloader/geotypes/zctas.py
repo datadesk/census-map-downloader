@@ -28,6 +28,7 @@ class ZctasDownloader2018(BaseDownloader):
     def set_paths(self):
         # Set all the normals paths
         super().set_paths()
+
         # Add a raw download path for the relationships files
         self.relationship_name = "zcta_county_rel_10.txt"
         self.relationship_path = self.raw_dir.joinpath(self.relationship_name)
@@ -35,8 +36,8 @@ class ZctasDownloader2018(BaseDownloader):
     def download(self):
         # Do the regular download
         super().download()
+
         # Also download the relationship file that connects ZCTAs to counties
-        # If it doesn't, download it from the Census FTP
         self.relationship_url = "https://www2.census.gov/geo/docs/maps-data/data/rel/zcta_county_rel_10.txt"
         logger.debug(f"Downloading {self.relationship_url} to {self.relationship_path}")
         urlretrieve(self.relationship_url, self.relationship_path)
@@ -48,14 +49,29 @@ class ZctasDownloader2018(BaseDownloader):
         # Write out national file
         super().process()
 
+        # Read in the raw shape
         gdf = gpd.read_file(self.shp_path)
+
         # Read relationship file
-        df = pd.read_csv(self.relationship_path, usecols=['ZCTA5', 'STATE'], dtype={'ZCTA5': str, 'STATE': str})
+        df = pd.read_csv(
+            self.relationship_path,
+            usecols=['ZCTA5', 'STATE'],
+            dtype={'ZCTA5': str, 'STATE': str}
+        )
 
-        # Loop through the 50 states and write out a GeoJSON for each
+        # Loop through the 50 states
         for state in us.STATES:
+            # Filter down to the ZCTAs in this state
             state_df = gdf[gdf.ZCTA5CE10.isin(df.loc[df.STATE == state.fips, 'ZCTA5'])]
-            state_geojson_path = self.processed_dir.joinpath(f"2018_zctas_{state}.geojson")
 
+            # Set page for this GeoJSON
+            state_geojson_path = self.processed_dir.joinpath(f"2018_zctas_{state.abbr.lower()}.geojson")
+
+            # Check if the geojson file already exists
+            if state_geojson_path.exists():
+                logger.debug(f"GeoJSON file already exists at {state_geojson_path}")
+                return
+
+            # Write it out as GeoJSON
             logger.debug(f"Writing out {len(state_df)} shapes in {state} to {state_geojson_path}")
             state_df.to_file(state_geojson_path, driver="GeoJSON")

@@ -8,6 +8,12 @@ import census_map_downloader
 
 
 @click.group(help="Easily download U.S. census maps")
+@click.option(
+    "--data-dir",
+    nargs=1,
+    default="./",
+    help="The folder where you want to download the data"
+)
 @click.pass_context
 def cmd(ctx, data_dir="./"):
     ctx.ensure_object(dict)

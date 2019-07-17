@@ -1,23 +1,26 @@
 census-map-downloader
 =====================
 
-A template for open-source Python software repositories
+Easily download U.S. census maps
 
-```bash
-$ censusmapdownloader
-Usage: censusmapdownloader [OPTIONS] COMMAND [ARGS]...
+Command line usage
+------------------
 
-  Easily download U.S. census maps
+::
 
-Options:
-  --help  Show this message and exit.
+    Usage: censusmapdownloader [OPTIONS] COMMAND [ARGS]...
 
-Commands:
-  counties  Download counties
-  places    Download places
-  tracts    Download tracts
-  zcta      Download ZCTAs
-```
+      Easily download U.S. census maps
+
+    Options:
+      --data-dir TEXT  The folder where you want to download the data
+      --help           Show this message and exit.
+
+    Commands:
+      counties  Download counties
+      places    Download places
+      tracts    Download tracts
+      zcta      Download ZCTAs
 
 Contributing
 ------------
