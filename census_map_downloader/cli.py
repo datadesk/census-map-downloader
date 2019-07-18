@@ -23,28 +23,28 @@ def cmd(ctx, data_dir="./"):
 @cmd.command(help="Download places")
 @click.pass_context
 def places(ctx):
-    obj = census_map_downloader.PlacesDownloader2018()
+    obj = census_map_downloader.PlacesDownloader2018(data_dir=ctx.obj['data_dir'])
     obj.run()
 
 
 @cmd.command(help="Download tracts")
 @click.pass_context
 def tracts(ctx):
-    obj = census_map_downloader.TractsDownloader2010()
+    obj = census_map_downloader.TractsDownloader2010(data_dir=ctx.obj['data_dir'])
     obj.run()
 
 
 @cmd.command(help="Download counties")
 @click.pass_context
 def counties(ctx):
-    obj = census_map_downloader.CountiesDownloader2018()
+    obj = census_map_downloader.CountiesDownloader2018(data_dir=ctx.obj['data_dir'])
     obj.run()
 
 
 @cmd.command(help="Download ZCTAs")
 @click.pass_context
 def zcta(ctx):
-    obj = census_map_downloader.ZctasDownloader2018()
+    obj = census_map_downloader.ZctasDownloader2018(data_dir=ctx.obj['data_dir'])
     obj.run()
 
 
