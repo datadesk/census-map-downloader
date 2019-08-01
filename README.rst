@@ -30,6 +30,8 @@ Command line usage
       places    Download places
       tracts    Download tracts
       zcta      Download ZCTAs
+      blocks    Download blocks
+      blockgroups Download blockgroups
 
 Contributing
 ------------

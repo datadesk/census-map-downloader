@@ -48,5 +48,19 @@ def zcta(ctx):
     obj.run()
 
 
+@cmd.command(help="Download blocks")
+@click.pass_context
+def blocks(ctx):
+    obj = census_map_downloader.BlocksDownloader2010(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download block group")
+@click.pass_context
+def blockgroups(ctx):
+    obj = census_map_downloader.BlockGroupsDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
 if __name__ == '__main__':
     cmd()
