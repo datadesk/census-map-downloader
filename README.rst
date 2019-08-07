@@ -36,11 +36,11 @@ Command line usage
 Examples
 ------------------
 
-Here's an example of downloading all counties::
+Here's an example of downloading all counties ::
 
     censusmapdownloader counties
 
-You can specify the download directory with --data-dir.:: 
+You can specify the download directory with --data-dir :: 
 
     censusmapdownloader --data-dir ./my-special-folder/ counties
 
