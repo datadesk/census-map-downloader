@@ -33,6 +33,15 @@ Command line usage
       blocks    Download blocks
       blockgroups Download blockgroups
 
+Examples
+------------------
+
+Here's an example of downloading all counties::
+    censusmapdownloader counties
+
+You can specify the download directory with ::--data-dir. 
+    censusmapdownloader --data-dir ./my-special-folder/ counties
+
 Contributing
 ------------
 
