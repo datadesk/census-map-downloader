@@ -33,7 +33,7 @@ class StateBlocksDownloader2018(BaseDownloader):
         self.shp_path = self.raw_dir.joinpath(self.shp_name)
         self.zip_path = self.raw_dir.joinpath(self.zip_name)
         self.geojson_name = self.zip_name.replace(".zip",".geojson")
-        self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
+        self.geojson_path = self.processed_dir.joinpath(f"{self.state.abbr.upper()}.geojson")
 
     @property
     def url(self):
