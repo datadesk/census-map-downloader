@@ -1,19 +1,27 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import us
+import collections
 import geopandas as gpd
 from census_map_downloader.base import BaseDownloader
+from census_map_downloader.decorators import register
 
 # Logging
 import logging
 logger = logging.getLogger(__name__)
 
 
-class StateBlocksDownloader2010(BaseDownloader):
+class StateBlocksDownloader2018(BaseDownloader):
     """
-    Download 2010 blocks for a single state.
+    Download 2018 blocks for a single state.
     """
-    YEAR = 2010
+    YEAR = 2018
+    FIELD_CROSSWALK = collections.OrderedDict({
+        "BLOCKCE10": "census_block",
+        "GEOID10": "block_identifier",
+        "NAME10": "census_block_name",
+        "geometry": "geometry"
+    })
 
     def __init__(self, state, data_dir):
         # Configure the state
@@ -24,72 +32,48 @@ class StateBlocksDownloader2010(BaseDownloader):
         self.shp_name = self.zip_name.replace(".zip", ".shp")
         self.shp_path = self.raw_dir.joinpath(self.shp_name)
         self.zip_path = self.raw_dir.joinpath(self.zip_name)
-
-    def run(self):
-        self.download()
-        self.unzip()
-        return self.shp_path
+        self.geojson_name = self.zip_name.replace(".zip",".geojson")
+        self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
 
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/TABBLOCK/{self.YEAR}/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
+        return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
 
     @property
     def zip_name(self):
-        return f"tl_{self.YEAR}_{self.state.fips}_tabbloc10.zip"
+        return f"tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
+
+    def process(self):
+        df = gpd.read_file(self.shp_path)
+
+        trimmed = df.drop(
+            [i for i in list(df.columns) if i not in list(self.FIELD_CROSSWALK.keys())],
+            axis=1
+        )
+
+        # Rename the fields using the crosswalk as a map
+        trimmed.rename(columns=self.FIELD_CROSSWALK, inplace=True)
+
+        # Write out the file
+        print(f"Writing file with {len(trimmed)} blocks to {self.geojson_path}")
+        trimmed.to_file(self.geojson_path, index=False, driver="GeoJSON")
 
 
-class BlocksDownloader2010(BaseDownloader):
+class BlocksDownloader2018(BaseDownloader):
     """
-    Download all 2010 blocks in the United States.
+    Download all 2018 blocks in the United States.
     """
-    YEAR = 2010
-    PROCESSED_NAME = "blocks_2010"
-
-    def __init__(self, data_dir=None):
-        super().__init__(data_dir=data_dir)
-        self.merged_path = self.raw_dir.joinpath("blocks_us_2010.shp")
-
     def run(self):
         self.download()
-        self.process()
 
     def set_paths(self):
-        self.geojson_name = f"{self.PROCESSED_NAME}.geojson"
-        self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
+        pass
 
     def download(self):
-        if self.merged_path.exists():
-            logger.debug(f"SHP file already exists at {self.merged_path}")
-            return
-
         # Loop through all the states and download the shapes
-        path_list = []
         for state in us.STATES:
-            logger.debug(f"Downloading {state}")
-            shp_path = StateBlocksDownloader2010(
+            print(f"Downloading {state}")
+            shp_path = StateBlocksDownloader2018(
                 state.abbr,
                 data_dir=self.data_dir
             ).run()
-            path_list.append(shp_path)
-
-        # Open all the shapes
-        df_list = [gpd.read_file(p) for p in path_list]
-
-        # Concatenate them together
-        df = gpd.pd.concat(df_list)
-
-        logger.debug(f"Writing file with {len(df)} tracts to {self.merged_path}")
-        df.to_file(self.merged_path, index=False)
-
-    def process(self):
-        """
-        Refine the raw data and convert it to our preferred format, GeoJSON.
-        """
-        if self.geojson_path.exists():
-            logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
-            return
-
-        gdf = gpd.read_file(self.merged_path)
-        logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
-        gdf.to_file(self.geojson_path, driver="GeoJSON")

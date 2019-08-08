@@ -51,7 +51,7 @@ def zcta(ctx):
 @cmd.command(help="Download blocks")
 @click.pass_context
 def blocks(ctx):
-    obj = census_map_downloader.BlocksDownloader2010(data_dir=ctx.obj['data_dir'])
+    obj = census_map_downloader.BlocksDownloader2018(data_dir=ctx.obj['data_dir'])
     obj.run()
 
 

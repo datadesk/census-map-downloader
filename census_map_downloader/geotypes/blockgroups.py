@@ -41,7 +41,7 @@ class StateBlockGroupsDownloader2018(BaseDownloader):
 
 class BlockGroupsDownloader2018(BaseDownloader):
     """
-    Download all 2018 tracts in the United States.
+    Download all 2018 block groups in the United States.
     """
     YEAR = 2018
     PROCESSED_NAME = "blockgroups_2018"
@@ -67,7 +67,7 @@ class BlockGroupsDownloader2018(BaseDownloader):
         path_list = []
         for state in us.STATES:
             logger.debug(f"Downloading {state}")
-            shp_path = StateBlockGroupDownloader2018(
+            shp_path = StateBlockGroupsDownloader2018(
                 state.abbr,
                 data_dir=self.data_dir
             ).run()
@@ -79,7 +79,7 @@ class BlockGroupsDownloader2018(BaseDownloader):
         # Concatenate them together
         df = gpd.pd.concat(df_list)
 
-        logger.debug(f"Writing file with {len(df)} tracts to {self.merged_path}")
+        logger.debug(f"Writing file with {len(df)} blocks groups to {self.merged_path}")
         df.to_file(self.merged_path, index=False)
 
     def process(self):
