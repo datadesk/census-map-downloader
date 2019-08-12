@@ -7,6 +7,9 @@ verify_ssl = true
 twine = "*"
 flake8 = "*"
 coverage = "*"
+jupyterlab = "*"
+descartes = "*"
+matplotlib = "*"
 
 [packages]
 geopandas = "*"

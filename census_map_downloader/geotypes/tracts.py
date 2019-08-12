@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import collections
-from census_map_downloader.base import BaseStateDownloader, BaseDownloader
+from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
 
 # Logging
 import logging
@@ -12,16 +12,17 @@ class StateTractsDownloader2010(BaseStateDownloader):
     """
     Download 2010 tracts for a single state.
     """
-    PROCESSED_NAME = "tracts_2010"
+    YEAR = 2010
+    PROCESSED_NAME = f"tracts_{YEAR}"
     # Docs pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP10": "state_fips",
         "COUNTYFP10": "county_fips",
-        "TRACTCE10": "tract_code",
-        "GEOID10": "tract_identifier",
-        "NAME10": "census_tract_name",
+        "TRACTCE10": "tract_id",
+        "GEOID10": "geoid",
+        "NAME10": "tract_name",
         "geometry": "geometry"
-        })
+    })
 
     @property
     def url(self):
@@ -41,11 +42,11 @@ class StateTractsDownloader2000(StateTractsDownloader2010):
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP00": "state_fips",
         "COUNTYFP00": "county_fips",
-        "TRACTCE00": "tract_code",
-        "CTIDFP00": "tract_identifier",
-        "NAME10": "census_tract_name",
+        "TRACTCE00": "tract_id",
+        "CTIDFP00": "geoid",
+        "NAME10": "tract_name",
         "geometry": "geometry"
-        })
+    })
 
     @property
     def url(self):
@@ -61,41 +62,22 @@ class StateTractsDownloader2000(StateTractsDownloader2010):
 
     @property
     def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.lower()}.geojson"
 
 
-class TractsDownloader2010(BaseDownloader):
+class TractsDownloader2010(BaseStateListDownloader):
     """
     Download all 2010 tracts in the United States.
     """
-    PROCESSED_NAME = "tracts_2010"
+    YEAR = 2010
+    PROCESSED_NAME = f"tracts_{YEAR}"
+    DOWNLOADER_CLASS = StateTractsDownloader2010
 
-    def run(self):
-        self.download()
-        # self.process()
 
-    def download(self):
-        # Loop through all the states and download the shapes
-        # path_list = []
-        for state in us.STATES:
-            logger.debug(f"Downloading {state}")
-            StateTractsDownloader2010(
-                state.abbr,
-                data_dir=self.data_dir
-            ).run()
-            # path_list.append(shp_path)
-
-        # # Open all the shapes
-        # df_list = [gpd.read_file(p) for p in path_list]
-
-        # # Concatenate them together
-        # df = gpd.pd.concat(df_list)
-
-        # # Write it out, if it doesn't already exist.
-        # us_path = self.data_dir.joinpath("us.shp")
-        # if us_path.exists():
-        #     logger.debug(f"File already exists at {us_path}")
-        #     return us_path
-        # logger.debug(f"Writing file with {len(df)} tracts to {us_path}")
-        # df.to_file(us_path, index=False)
-        # return us_path
+class TractsDownloader2000(BaseStateListDownloader):
+    """
+    Download all 2000 tracts in the United States.
+    """
+    YEAR = 2000
+    PROCESSED_NAME = f"tracts_{YEAR}"
+    DOWNLOADER_CLASS = StateTractsDownloader2000

@@ -127,11 +127,11 @@ class BaseDownloader(object):
         trimmed = gdf[list(self.FIELD_CROSSWALK.keys())]
 
         # Rename the fields using the crosswalk
-        trimmed.rename(columns=self.FIELD_CROSSWALK, inplace=True)
+        cleaned = trimmed.rename(columns=self.FIELD_CROSSWALK)
 
         # Write out a GeoJSON file
-        logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
-        trimmed.to_file(self.geojson_path, driver="GeoJSON")
+        logger.debug(f"Writing out {len(cleaned)} shapes to {self.geojson_path}")
+        cleaned.to_file(self.geojson_path, driver="GeoJSON")
 
 
 class BaseStateDownloader(BaseDownloader):
@@ -145,4 +145,61 @@ class BaseStateDownloader(BaseDownloader):
 
     @property
     def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.lower()}.geojson"
+
+
+class BaseStateListDownloader(BaseDownloader):
+    """
+    A base downloader that will retrieve all 50 states.
+    """
+    def run(self):
+        self.download()
+        self.merge()
+        self.process()
+
+    @property
+    def merged_path(self):
+        """
+        The location of all the source shapefiles merged together.
+        """
+        return self.raw_dir.joinpath(f"{self.PROCESSED_NAME}.shp")
+
+    def download(self):
+        # Loop through all the states and download the shapes
+        for state in us.STATES:
+            logger.debug(f"Downloading {state}")
+            runner = self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir)
+            runner.run()
+
+    def merge(self):
+        """
+        Combine all the source shapefiles into a single shapefile.
+        """
+        if self.merged_path.exists():
+            logger.debug(f"SHP file already exists at {self.merged_path}")
+            return
+
+        # Open all the shapes
+        path_list = [
+            self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir).shp_path
+            for state in us.STATES
+        ]
+        df_list = [gpd.read_file(p) for p in path_list]
+
+        # Concatenate them together
+        df = gpd.pd.concat(df_list)
+
+        logger.debug(f"Writing file with {len(df)} tracts to {self.merged_path}")
+        df.to_file(self.merged_path, index=False)
+
+    def process(self):
+        """
+        Process the raw data and convert it to our preferred format, GeoJSON.
+        """
+        if self.geojson_path.exists():
+            logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
+            return
+
+        gdf = gpd.read_file(self.merged_path)
+        logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
+        gdf.to_file(self.geojson_path, driver="GeoJSON")

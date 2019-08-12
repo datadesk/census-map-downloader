@@ -17,7 +17,7 @@ class CountiesDownloader2018(BaseDownloader):
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
         "COUNTYFP": "county_fips",
-        "GEOID": "county_identifier",
+        "GEOID": "geoid",
         "NAME": "county_name",
         "geometry": "geometry"
     })

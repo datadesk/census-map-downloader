@@ -14,10 +14,12 @@ def main():
     formatter = logging.Formatter('%(asctime)s|%(name)s|%(levelname)s|%(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    census_map_downloader.BlocksDownloader2018().run()
-    # census_map_downloader.USTractDownloader2010()
-    # census_map_downloader.CountyDownloader2018().run()
-    # census_map_downloader.ZctasDownloader2018().run()
+    data_dir = "./"
+    census_map_downloader.BlocksDownloader2018(data_dir=data_dir).run()
+    census_map_downloader.TractsDownloader2010(data_dir=data_dir).run()
+    census_map_downloader.CountiesDownloader2018(data_dir=data_dir).run()
+    census_map_downloader.PlacesDownloader2018(data_dir=data_dir).run()
+    census_map_downloader.ZctasDownloader2018(data_dir=data_dir).run()
 
 
 if __name__ == '__main__':
