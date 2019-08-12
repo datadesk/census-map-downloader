@@ -3,7 +3,6 @@
 import time
 import pathlib
 import zipfile
-import collections
 import geopandas as gpd
 from urllib.request import urlretrieve
 
