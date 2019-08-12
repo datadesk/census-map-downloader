@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-import us
 import collections
 from census_map_downloader.base import BaseStateDownloader, BaseDownloader
 
@@ -24,11 +23,6 @@ class StateTractsDownloader2010(BaseStateDownloader):
         "geometry": "geometry"
         })
 
-    def __init__(self, state, data_dir):
-        # Configure the state
-        self.state = us.states.lookup(state)
-        super().__init__(data_dir)
-
     @property
     def url(self):
         return self.state.shapefile_urls("tract")
@@ -36,10 +30,6 @@ class StateTractsDownloader2010(BaseStateDownloader):
     @property
     def zip_name(self):
         return f"tl_2010_{self.state.fips}_tract10.zip"
-
-    @property
-    def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
 
 
 class StateTractsDownloader2000(StateTractsDownloader2010):
