@@ -27,12 +27,9 @@ class StateBlocksDownloader2018(BaseDownloader):
         self.state = us.states.lookup(state)
         super().__init__(data_dir)
 
-    def set_paths(self):
-        self.shp_name = self.zip_name.replace(".zip", ".shp")
-        self.shp_path = self.raw_dir.joinpath(self.shp_name)
-        self.zip_path = self.raw_dir.joinpath(self.zip_name)
-        self.geojson_name = f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
-        self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
+    @property
+    def geojson_name(self):
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
 
     @property
     def url(self):

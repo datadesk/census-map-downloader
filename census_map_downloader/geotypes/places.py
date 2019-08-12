@@ -20,11 +20,6 @@ class StatePlacesDownloader2018(BaseDownloader):
         self.state = us.states.lookup(state)
         super().__init__(data_dir)
 
-    def set_paths(self):
-        self.shp_name = self.zip_name.replace(".zip", ".shp")
-        self.shp_path = self.raw_dir.joinpath(self.shp_name)
-        self.zip_path = self.raw_dir.joinpath(self.zip_name)
-
     def run(self):
         self.download()
         self.unzip()

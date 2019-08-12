@@ -32,15 +32,21 @@ class BaseDownloader(object):
         if not self.processed_dir.exists():
             self.processed_dir.mkdir()
 
-        # Set file paths
-        self.set_paths()
-
     def set_paths(self):
-        self.shp_name = self.zip_name.replace(".zip", ".shp")
-        self.shp_path = self.raw_dir.joinpath(self.shp_name)
-        self.zip_path = self.raw_dir.joinpath(self.zip_name)
         self.geojson_name = f"{self.PROCESSED_NAME}.geojson"
         self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
+
+    @property
+    def shp_name(self):
+        return self.zip_name.replace(".zip", ".shp")
+
+    @property
+    def shp_path:
+       return self.raw_dir.joinpath(self.shp_name)
+
+    @property
+    def zip_path:
+        return self.raw_dir.joinpath(self.zip_name)
 
     def run(self):
         self.download()
