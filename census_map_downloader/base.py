@@ -41,7 +41,7 @@ class BaseDownloader(object):
 
     @property
     def shp_path(self):
-       return self.raw_dir.joinpath(self.shp_name)
+        return self.raw_dir.joinpath(self.shp_name)
 
     @property
     def zip_path(self):
