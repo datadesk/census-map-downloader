@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import collections
 from census_map_downloader.base import BaseDownloader
 
 # Logging
@@ -13,7 +14,7 @@ class CountiesDownloader2018(BaseDownloader):
     """
     PROCESSED_NAME = "counties_2018"
     FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips"
+        "STATEFP": "state_fips",
         "COUNTYFP": "county_fips",
         "GEOID": "block_identifier",
         "NAME": "census_block_name",

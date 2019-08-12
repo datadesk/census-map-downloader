@@ -4,7 +4,6 @@ import us
 import collections
 import geopandas as gpd
 from census_map_downloader.base import BaseDownloader
-from census_map_downloader.decorators import register
 
 # Logging
 import logging
