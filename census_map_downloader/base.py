@@ -50,8 +50,8 @@ class BaseDownloader(object):
 
     @property
     def geojson_name(self):
-        return self.PROCESSED_NAME.geojson
-    
+        return f'{self.PROCESSED_NAME}.geojson'
+
     def run(self):
         self.download()
         self.unzip()

@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+import us
 import collections
 from census_map_downloader.base import BaseDownloader
 
@@ -7,17 +8,17 @@ from census_map_downloader.base import BaseDownloader
 import logging
 logger = logging.getLogger(__name__)
 
-
 class CountiesDownloader2018(BaseDownloader):
     """
     Download counties.
     """
     PROCESSED_NAME = "counties_2018"
+    # Docs for crosswalk are on pg 21 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
         "COUNTYFP": "county_fips",
-        "GEOID": "block_identifier",
-        "NAME": "census_block_name",
+        "GEOID": "county_identifier",
+        "NAME": "county_name",
         "geometry": "geometry"
     })
 

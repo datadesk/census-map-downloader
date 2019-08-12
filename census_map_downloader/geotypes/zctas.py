@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import us
+import collections
 import pandas as pd
 import geopandas as gpd
 from urllib.request import urlretrieve
@@ -15,7 +16,13 @@ class ZctasDownloader2018(BaseDownloader):
     """
     Download 5-digit ZIP Code Tabulation Area
     """
+    # Docs for crosswalk are on pg 62 https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf
     PROCESSED_NAME = "zctas_2018"
+    FIELD_CROSSWALK = collections.OrderedDict({
+        "ZCTA5CE10": "ZCTA",
+        "GEOID10": "county_identifier",
+        "geometry": "geometry"
+    })
 
     @property
     def url(self):
