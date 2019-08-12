@@ -32,49 +32,73 @@ class BaseDownloader(object):
         if not self.processed_dir.exists():
             self.processed_dir.mkdir()
 
-    @property
-    def shp_name(self):
-        return self.zip_name.replace(".zip", ".shp")
-
-    @property
-    def shp_path(self):
-        return self.raw_dir.joinpath(self.shp_name)
-
-    @property
-    def zip_path(self):
-        return self.raw_dir.joinpath(self.zip_name)
-
-    @property
-    def geojson_path(self):
-        return self.processed_dir.joinpath(self.geojson_name)
-
-    @property
-    def geojson_name(self):
-        return f'{self.PROCESSED_NAME}.geojson'
-
     def run(self):
+        """
+        Execute the downloader to fetch, prep and clean the source geotype files.
+        """
         self.download()
         self.unzip()
         self.process()
 
+    @property
+    def zip_name(self):
+        """
+        The name of the source zipfile
+        """
+        raise NotImplementedError("All geotype subclasses must provide their own zip_name property.")
+
+    @property
+    def zip_path(self):
+        """
+        The full path to the source zipfile.
+        """
+        return self.raw_dir.joinpath(self.zip_name)
+
+    @property
+    def shp_name(self):
+        """
+        The name of the source shapefile.
+        """
+        return self.zip_name.replace(".zip", ".shp")
+
+    @property
+    def shp_path(self):
+        """
+        The full path to the source shapefile.
+        """
+        return self.raw_dir.joinpath(self.shp_name)
+
+    @property
+    def geojson_name(self):
+        """
+        The name of the target GeoJSON created by this downloader.
+        """
+        return f'{self.PROCESSED_NAME}.geojson'
+
+    @property
+    def geojson_path(self):
+        """
+        The full path to the target GeoJSON created by this downloader.
+        """
+        return self.processed_dir.joinpath(self.geojson_name)
+
     def download(self):
         """
-        Downloads the TIGER SHP file of Census block for the provided state and county.
-        Returns the path to the ZIP file.
+        Download the source geotype files.
         """
         # Check if the zip file already exists
         if self.zip_path.exists():
             logger.debug(f"ZIP file already exists at {self.zip_path}")
             return
 
-        # If it doesn't, download it from the Census FTP
+        # If it doesn't, download it from the Census site
         logger.debug(f"Downloading {self.url} to {self.zip_path}")
         urlretrieve(self.url, self.zip_path)
         time.sleep(1)
 
     def unzip(self):
         """
-        Unzip the provided ZIP file.
+        Unzip the source geotype files.
         """
         # Check if the shape has already been unzipped
         if self.shp_path.exists():
@@ -88,20 +112,22 @@ class BaseDownloader(object):
 
     def process(self):
         """
-        Refine the raw data and convert it to our preferred format, GeoJSON.
+        Refine the source data and convert to cleaned GeoJSON.
         """
         # Check if the geojson file already exists
         if self.geojson_path.exists():
             logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
             return
 
+        # Read in the source shapefile
         gdf = gpd.read_file(self.shp_path)
 
+        # Trim it down to the subset of fields we want to keep
         trimmed = gdf[list(self.FIELD_CROSSWALK.keys())]
 
-        # Rename the fields using the crosswalk as a map
+        # Rename the fields using the crosswalk
         trimmed.rename(columns=self.FIELD_CROSSWALK, inplace=True)
 
-        # Write out GeoJSON file
+        # Write out a GeoJSON file
         logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
         trimmed.to_file(self.geojson_path, driver="GeoJSON")

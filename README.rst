@@ -9,7 +9,7 @@ Installation
 
 ::
 
-    pipenv install census-map-downloader
+    $ pipenv install census-map-downloader
 
 
 Command line usage
@@ -39,7 +39,7 @@ Here's an example of downloading all counties ::
 
     censusmapdownloader counties
 
-You can specify the download directory with --data-dir :: 
+You can specify the download directory with --data-dir ::
 
     censusmapdownloader --data-dir ./my-special-folder/ counties
 
