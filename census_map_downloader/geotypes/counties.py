@@ -13,7 +13,7 @@ class CountiesDownloader2018(BaseDownloader):
     Download counties.
     """
     PROCESSED_NAME = "counties_2018"
-    # Docs for crosswalk are on pg 21 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
+    # Docs for this crosswalk are on pg 21 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
         "COUNTYFP": "county_fips",
