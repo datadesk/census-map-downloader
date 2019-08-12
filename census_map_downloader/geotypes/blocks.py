@@ -27,20 +27,20 @@ class StateBlocksDownloader2018(BaseDownloader):
         self.state = us.states.lookup(state)
         super().__init__(data_dir)
 
-    @property
-    def zip_name(self):
-        return f"tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
-
     def set_paths(self):
         self.shp_name = self.zip_name.replace(".zip", ".shp")
         self.shp_path = self.raw_dir.joinpath(self.shp_name)
         self.zip_path = self.raw_dir.joinpath(self.zip_name)
         self.geojson_name = f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
         self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
-
+    
     @property
     def url(self):
         return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
+
+    @property
+    def zip_name(self):
+        return f"tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
 
 
 class BlocksDownloader2018(BaseDownloader):
