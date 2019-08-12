@@ -36,7 +36,7 @@ class StateBlocksDownloader2018(BaseDownloader):
     
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
+        return f"https://www2.census.gov/geo/tiger/TIGER2018/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
 
     @property
     def zip_name(self):
