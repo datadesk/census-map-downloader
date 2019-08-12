@@ -15,7 +15,7 @@ class StateBlocksDownloader2018(BaseDownloader):
     """
     YEAR = 2018
     PROCESSED_NAME = "blocks_2018"
-    # Docs for crosswalk are on pg 14 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
+    # Docs pg 14 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP10": "state_fips",
         "COUNTYFP10": "county_fips",

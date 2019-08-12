@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import us
 import collections
-import geopandas as gpd
 from census_map_downloader.base import BaseDownloader
 
 # Logging
@@ -40,14 +39,15 @@ class StateTractsDownloader2010(BaseDownloader):
 
     @property
     def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"    
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson" 
+
 
 class StateTractsDownloader2000(StateTractsDownloader2010):
     """
     Download 2000 tracts for a single state.
     """
     PROCESSED_NAME = "tracts_2000"
-    # Documentation for this crosswalk on pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2010/TGRSHP10SF1.pdf)
+    # Docs pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2010/TGRSHP10SF1.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP00": "state_fips",
         "COUNTYFP00": "county_fips",
@@ -71,7 +71,8 @@ class StateTractsDownloader2000(StateTractsDownloader2010):
 
     @property
     def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"    
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
+
 
 class TractsDownloader2010(BaseDownloader):
     """
