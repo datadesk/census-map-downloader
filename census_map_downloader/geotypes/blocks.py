@@ -33,7 +33,7 @@ class StateBlocksDownloader2018(BaseDownloader):
         self.zip_path = self.raw_dir.joinpath(self.zip_name)
         self.geojson_name = f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
         self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
-    
+
     @property
     def url(self):
         return f"https://www2.census.gov/geo/tiger/TIGER2018/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
