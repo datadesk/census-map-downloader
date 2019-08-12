@@ -34,7 +34,6 @@ class BaseDownloader(object):
 
     def set_paths(self):
         self.geojson_name = f"{self.PROCESSED_NAME}.geojson"
-        self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
 
     @property
     def shp_name(self):
@@ -47,6 +46,10 @@ class BaseDownloader(object):
     @property
     def zip_path(self):
         return self.raw_dir.joinpath(self.zip_name)
+
+    @property
+    def geojson_path(self):
+        return self.processed_dir.joinpath(self.geojson_name)
 
     def run(self):
         self.download()

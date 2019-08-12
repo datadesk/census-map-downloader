@@ -54,7 +54,7 @@ class BlocksDownloader2018(BaseDownloader):
         # Loop through all the states and download the shapes
         for state in us.STATES:
             print(f"Downloading {state}")
-            self.shp_path = StateBlocksDownloader2018(
+            shp_path = StateBlocksDownloader2018(
                 state.abbr,
                 data_dir=self.data_dir
             ).run()
