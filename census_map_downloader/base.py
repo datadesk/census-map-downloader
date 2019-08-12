@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import time
+import us
 import pathlib
 import zipfile
 import geopandas as gpd
