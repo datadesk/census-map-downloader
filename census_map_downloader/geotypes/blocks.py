@@ -42,6 +42,7 @@ class StateBlocksDownloader2018(BaseDownloader):
     def url(self):
         return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
 
+
 class BlocksDownloader2018(BaseDownloader):
     """
     Download all 2018 blocks in the United States.
