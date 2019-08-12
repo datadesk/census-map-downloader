@@ -105,3 +105,17 @@ class BaseDownloader(object):
         # Write out GeoJSON file
         logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
         trimmed.to_file(self.geojson_path, driver="GeoJSON")
+
+
+class BaseStateDownloader(BaseDownloader):
+    """
+    A base downloader for a single state's source files.
+    """
+    def __init__(self, state, data_dir):
+        # Configure the state
+        self.state = us.states.lookup(state)
+        super().__init__(data_dir)
+
+    @property
+    def geojson_name(self):
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"

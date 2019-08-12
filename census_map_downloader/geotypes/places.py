@@ -2,23 +2,18 @@
 # -*- coding: utf-8 -*-
 import us
 import geopandas as gpd
-from census_map_downloader.base import BaseDownloader
+from census_map_downloader.base import BaseStateDownloader, BaseDownloader
 
 # Logging
 import logging
 logger = logging.getLogger(__name__)
 
 
-class StatePlacesDownloader2018(BaseDownloader):
+class StatePlacesDownloader2018(BaseStateDownloader):
     """
     Download 2018 places for a single state.
     """
     YEAR = 2018
-
-    def __init__(self, state, data_dir):
-        # Configure the state
-        self.state = us.states.lookup(state)
-        super().__init__(data_dir)
 
     def run(self):
         self.download()

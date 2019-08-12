@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 import us
 import collections
-from census_map_downloader.base import BaseDownloader
+from census_map_downloader.base import BaseStateDownloader, BaseDownloader
 
 # Logging
 import logging
 logger = logging.getLogger(__name__)
 
 
-class StateBlocksDownloader2018(BaseDownloader):
+class StateBlocksDownloader2018(BaseStateDownloader):
     """
     Download 2018 blocks for a single state.
     """
@@ -24,15 +24,6 @@ class StateBlocksDownloader2018(BaseDownloader):
         "NAME10": "census_block_name",
         "geometry": "geometry"
     })
-
-    def __init__(self, state, data_dir):
-        # Configure the state
-        self.state = us.states.lookup(state)
-        super().__init__(data_dir)
-
-    @property
-    def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
 
     @property
     def url(self):
