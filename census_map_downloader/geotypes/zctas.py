@@ -5,14 +5,14 @@ import collections
 import pandas as pd
 import geopandas as gpd
 from urllib.request import urlretrieve
-from census_map_downloader.base import BaseDownloader
+from census_map_downloader.base import BaseStateDownloader, BaseDownloader
 
 # Logging
 import logging
 logger = logging.getLogger(__name__)
 
 
-class ZctasDownloader2018(BaseDownloader):
+class ZctasDownloader2018(BaseStateDownloader):
     """
     Download 5-digit ZIP Code Tabulation Area
     """

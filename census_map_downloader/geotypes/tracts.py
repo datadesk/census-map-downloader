@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 import us
 import collections
-from census_map_downloader.base import BaseDownloader
+from census_map_downloader.base import BaseStateDownloader, BaseDownloader
 
 # Logging
 import logging
 logger = logging.getLogger(__name__)
 
 
-class StateTractsDownloader2010(BaseDownloader):
+class StateTractsDownloader2010(BaseStateDownloader):
     """
     Download 2010 tracts for a single state.
     """
