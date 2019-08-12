@@ -96,9 +96,10 @@ class BaseDownloader(object):
 
         gdf = gpd.read_file(self.shp_path)
 
-        trimmed = gdf.rename(
-            columns=self.FIELD_CROSSWALK
-        )[list(self.FIELD_CROSSWALK.keys())]
+        trimmed = gdf[list(self.FIELD_CROSSWALK.keys())]
+
+        # Rename the fields using the crosswalk as a map
+        trimmed.rename(columns=self.FIELD_CROSSWALK, inplace=True)
 
         # Write out GeoJSON file
         logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
