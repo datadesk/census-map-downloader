@@ -16,6 +16,7 @@ class StateBlocksDownloader2018(BaseDownloader):
     Download 2018 blocks for a single state.
     """
     YEAR = 2018
+    PROCESSED_NAME = "blocks_2018"
     FIELD_CROSSWALK = collections.OrderedDict({
         "BLOCKCE10": "census_block",
         "GEOID10": "block_identifier",
@@ -32,8 +33,8 @@ class StateBlocksDownloader2018(BaseDownloader):
         self.shp_name = self.zip_name.replace(".zip", ".shp")
         self.shp_path = self.raw_dir.joinpath(self.shp_name)
         self.zip_path = self.raw_dir.joinpath(self.zip_name)
-        self.geojson_name = self.zip_name.replace(".zip",".geojson")
-        self.geojson_path = self.processed_dir.joinpath(f"{self.state.abbr.upper()}.geojson")
+        self.geojson_name = f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
+        self.geojson_path = self.processed_dir.joinpath(self.geojson_name)
 
     @property
     def url(self):
@@ -42,21 +43,6 @@ class StateBlocksDownloader2018(BaseDownloader):
     @property
     def zip_name(self):
         return f"tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
-
-    def process(self):
-        df = gpd.read_file(self.shp_path)
-
-        trimmed = df.drop(
-            [i for i in list(df.columns) if i not in list(self.FIELD_CROSSWALK.keys())],
-            axis=1
-        )
-
-        # Rename the fields using the crosswalk as a map
-        trimmed.rename(columns=self.FIELD_CROSSWALK, inplace=True)
-
-        # Write out the file
-        print(f"Writing file with {len(trimmed)} blocks to {self.geojson_path}")
-        trimmed.to_file(self.geojson_path, index=False, driver="GeoJSON")
 
 
 class BlocksDownloader2018(BaseDownloader):

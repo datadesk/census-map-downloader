@@ -55,12 +55,5 @@ def blocks(ctx):
     obj.run()
 
 
-@cmd.command(help="Download block group")
-@click.pass_context
-def blockgroups(ctx):
-    obj = census_map_downloader.BlockGroupsDownloader2018(data_dir=ctx.obj['data_dir'])
-    obj.run()
-
-
 if __name__ == '__main__':
     cmd()

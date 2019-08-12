@@ -12,6 +12,13 @@ class CountiesDownloader2018(BaseDownloader):
     Download counties.
     """
     PROCESSED_NAME = "counties_2018"
+    FIELD_CROSSWALK = collections.OrderedDict({
+        "STATEFP": "state_fips"
+        "COUNTYFP": "county_fips",
+        "GEOID": "block_identifier",
+        "NAME": "census_block_name",
+        "geometry": "geometry"
+    })
 
     @property
     def url(self):

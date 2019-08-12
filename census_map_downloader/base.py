@@ -76,3 +76,23 @@ class BaseDownloader(object):
         logger.debug(f"Unzipping {self.zip_path} to {self.raw_dir}")
         with zipfile.ZipFile(self.zip_path, "r") as z:
             z.extractall(self.raw_dir)
+
+    def process(self):
+        """
+        Refine the raw data and convert it to our preferred format, GeoJSON.
+        """
+        # Check if the geojson file already exists
+        if self.geojson_path.exists():
+            logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
+            return
+
+        gdf = gpd.read_file(self.shp_path)
+
+        trimmed = gdf[list(self.FIELD_CROSSWALK.keys())]
+
+        # Rename the fields using the crosswalk as a map
+        trimmed.rename(columns=self.FIELD_CROSSWALK, inplace=True)
+
+        # Write out GeoJSON file
+        logger.debug(f"Writing out {len(gdf)} shapes to {self.geojson_path}")
+        trimmed.to_file(self.geojson_path, driver="GeoJSON")

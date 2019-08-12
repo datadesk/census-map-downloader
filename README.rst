@@ -31,7 +31,6 @@ Command line usage
       tracts    Download tracts
       zcta      Download ZCTAs
       blocks    Download blocks
-      blockgroups Download blockgroups
 
 Examples
 ------------------
