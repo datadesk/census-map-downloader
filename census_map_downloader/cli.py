@@ -43,7 +43,7 @@ def counties(ctx):
 
 @cmd.command(help="Download ZCTAs")
 @click.pass_context
-def zcta(ctx):
+def zctas(ctx):
     obj = census_map_downloader.ZctasDownloader2018(data_dir=ctx.obj['data_dir'])
     obj.run()
 
