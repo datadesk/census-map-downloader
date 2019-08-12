@@ -41,11 +41,11 @@ class BaseDownloader(object):
         return self.zip_name.replace(".zip", ".shp")
 
     @property
-    def shp_path:
+    def shp_path(self):
        return self.raw_dir.joinpath(self.shp_name)
 
     @property
-    def zip_path:
+    def zip_path(self):
         return self.raw_dir.joinpath(self.zip_name)
 
     def run(self):
