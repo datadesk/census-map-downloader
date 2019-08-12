@@ -14,7 +14,7 @@ class StateTractsDownloader2010(BaseDownloader):
     Download 2010 tracts for a single state.
     """
     PROCESSED_NAME = "tracts_2010"
-    # Documentation for this crosswalk on pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
+    # Docs pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP10": "state_fips",
         "COUNTYFP10": "county_fips",
@@ -39,7 +39,7 @@ class StateTractsDownloader2010(BaseDownloader):
 
     @property
     def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson" 
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.upper()}.geojson"
 
 
 class StateTractsDownloader2000(StateTractsDownloader2010):

@@ -7,6 +7,7 @@ from census_map_downloader.base import BaseDownloader
 import logging
 logger = logging.getLogger(__name__)
 
+
 class CountiesDownloader2018(BaseDownloader):
     """
     Download counties.
