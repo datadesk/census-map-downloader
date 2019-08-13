@@ -37,11 +37,11 @@ Examples
 
 Here's an example of downloading all counties ::
 
-    censusmapdownloader counties
+    $ censusmapdownloader counties
 
 You can specify the download directory with --data-dir ::
 
-    censusmapdownloader --data-dir ./my-special-folder/ counties
+    $ censusmapdownloader --data-dir ./my-special-folder/ counties
 
 Contributing
 ------------
