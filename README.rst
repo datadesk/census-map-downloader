@@ -29,7 +29,7 @@ Command line usage
       counties  Download counties
       places    Download places
       tracts    Download tracts
-      zctas      Download ZCTAs
+      zctas     Download ZCTAs
       blocks    Download blocks
 
 Examples
