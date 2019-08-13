@@ -4,6 +4,7 @@ from .geotypes.places import PlacesDownloader2018
 from .geotypes.tracts import TractsDownloader2010
 from .geotypes.zctas import ZctasDownloader2018
 from .geotypes.blocks import BlocksDownloader2018
+from .geotypes.states import StatesDownloader2018
 
 
 __all__ = (
@@ -12,5 +13,6 @@ __all__ = (
     "PlacesDownloader2018",
     "TractsDownloader2010",
     "ZctasDownloader2018",
-    "BlocksDownloader2018"
+    "BlocksDownloader2018",
+    "StatesDownloader2018"
 )

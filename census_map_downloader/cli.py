@@ -55,5 +55,12 @@ def blocks(ctx):
     obj.run()
 
 
+@cmd.command(help="Download states")
+@click.pass_context
+def blocks(ctx):
+    obj = census_map_downloader.StatesDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
 if __name__ == '__main__':
     cmd()

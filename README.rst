@@ -31,6 +31,7 @@ Command line usage
       tracts    Download tracts
       zctas     Download ZCTAs
       blocks    Download blocks
+      states    Download states
 
 Examples
 ------------------
