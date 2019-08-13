@@ -15,6 +15,11 @@ def main():
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     data_dir = "./"
+    census_map_downloader.BlocksDownloader2018(data_dir=data_dir).run()
+    census_map_downloader.TractsDownloader2010(data_dir=data_dir).run()
+    census_map_downloader.CountiesDownloader2018(data_dir=data_dir).run()
+    census_map_downloader.PlacesDownloader2018(data_dir=data_dir).run()
+    census_map_downloader.ZctasDownloader2018(data_dir=data_dir).run()
     census_map_downloader.StatesDownloader2018(data_dir=data_dir).run()
 
 
