@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class StatesDownloader2018(BaseDownloader):
     """
-    Download counties.
+    Download states.
     """
     YEAR = "2018"
     PROCESSED_NAME = f"states_{YEAR}"
@@ -18,8 +18,8 @@ class StatesDownloader2018(BaseDownloader):
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
         "GEOID": "geoid",
-        "STUPS": "state_abbr",
-        "NAME": "county_name",
+        "STUSPS": "state_abbr",
+        "NAME": "state_name",
         "geometry": "geometry"
     })
 
