@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='census-map-downloader',
-    version='0.0.3',
+    version='0.0.4',
     description="Easily download U.S. census maps",
     long_description=read('README.rst'),
     author='Los Angeles Times Data Desk',
