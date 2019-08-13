@@ -15,6 +15,10 @@ matplotlib = "*"
 geopandas = "*"
 us = "*"
 click = "*"
+topojson = ">=1.0rc4"
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true

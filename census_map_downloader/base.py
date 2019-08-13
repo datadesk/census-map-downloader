@@ -1,9 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-import time
 import us
+import json
+import time
 import pathlib
 import zipfile
+import topojson
 import geopandas as gpd
 from urllib.request import urlretrieve
 
@@ -83,6 +85,20 @@ class BaseDownloader(object):
         """
         return self.processed_dir.joinpath(self.geojson_name)
 
+    @property
+    def topojson_name(self):
+        """
+        The name of the target TopoJSON created by this downloader.
+        """
+        return f'{self.PROCESSED_NAME}.topojson'
+
+    @property
+    def topojson_path(self):
+        """
+        The full path to the target TopoJSON created by this downloader.
+        """
+        return self.processed_dir.joinpath(self.topojson_name)
+
     def download(self):
         """
         Download the source geotype files.
@@ -115,23 +131,45 @@ class BaseDownloader(object):
         """
         Refine the source data and convert to cleaned GeoJSON.
         """
-        # Check if the geojson file already exists
+        # Check if the geojson and topojson already exists
         if self.geojson_path.exists():
             logger.debug(f"GeoJSON file already exists at {self.geojson_path}")
+        if self.topojson_path.exists():
+            logger.debug(f"TopoJSON file already exists at {self.topojson_path}")
+
+        # If they both do, quit now
+        if self.geojson_path.exists() and self.topojson_path.exists():
             return
 
         # Read in the source shapefile
+        logger.debug(f"Reading in shapefile from {self.shp_path}")
         gdf = gpd.read_file(self.shp_path)
 
         # Trim it down to the subset of fields we want to keep
-        trimmed = gdf[list(self.FIELD_CROSSWALK.keys())]
+        raw_field_list = list(self.FIELD_CROSSWALK.keys())
+        logger.debug(f"Trimming down columns to {', '.join(raw_field_list)}")
+        trimmed = gdf[raw_field_list]
 
         # Rename the fields using the crosswalk
+        clean_field_list = list(self.FIELD_CROSSWALK.values())
+        logger.debug(f"Renaming columns to: {', '.join(clean_field_list)}")
         cleaned = trimmed.rename(columns=self.FIELD_CROSSWALK)
 
         # Write out a GeoJSON file
-        logger.debug(f"Writing out {len(cleaned)} shapes to {self.geojson_path}")
-        cleaned.to_file(self.geojson_path, driver="GeoJSON")
+        if not self.geojson_path.exists():
+            logger.debug(f"Writing out {len(cleaned)} shapes to {self.geojson_path}")
+            cleaned.to_file(self.geojson_path, driver="GeoJSON")
+
+        # Write to to Topojson file
+        if not self.topojson_path.exists():
+            logger.debug("Converting to topojson")
+            tj = topojson.Topology(
+                cleaned,
+                prequantize=False,
+                topology=True
+            )
+            logger.debug(f"Writing out {len(cleaned)} shapes to {self.topojson_path}")
+            json.dump(tj.to_json(), open(self.topojson_path, 'w'), indent=2)
 
 
 class BaseStateDownloader(BaseDownloader):
@@ -141,11 +179,16 @@ class BaseStateDownloader(BaseDownloader):
     def __init__(self, state, data_dir):
         # Configure the state
         self.state = us.states.lookup(state)
+        # Run the usual business
         super().__init__(data_dir)
 
     @property
     def geojson_name(self):
         return f"{self.PROCESSED_NAME}_{self.state.abbr.lower()}.geojson"
+
+    @property
+    def topojson_name(self):
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.lower()}.topojson"
 
 
 class BaseStateListDownloader(BaseDownloader):
