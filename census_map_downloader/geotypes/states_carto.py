@@ -17,7 +17,7 @@ class StatesCartoDownloader2018(BaseDownloader):
     FIELD_CROSSWALK = collections.OrderedDict({
 		"STATEFP": "state_fips",
         "GEOID": "geoid",
-        "NAME": "block_name",
+        "NAME": "name",
         "geometry": "geometry",
         "ALAND": "land_area",
         "AWATER": "water_area"
@@ -29,4 +29,4 @@ class StatesCartoDownloader2018(BaseDownloader):
 
     @property
     def zip_name(self):
-        return f"cb_2018_us_state_500k"
+        return f"cb_2018_us_state_500k.zip"

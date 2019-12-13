@@ -15,10 +15,10 @@ class CongressCartoDownloader2018(BaseDownloader):
     PROCESSED_NAME = "congressionaldistricts_carto_2018"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips",
+        "STATEFP": "state_fip",
         "CD116FP": "congresional_district",
         "GEOID": "geoid",
-        "NAME": "name",
+        "NAMELSAD": "name",
         "geometry": "geometry",
         "LSAD": "legal_statistical_area",
         "CDSESSN": "congressional_session_code",
