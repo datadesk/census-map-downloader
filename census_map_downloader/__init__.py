@@ -8,6 +8,8 @@ from .geotypes.counties_carto import CountiesCartoDownloader2018
 from .geotypes.congress_carto import CongressCartoDownloader2018
 from .geotypes.states_carto import StatesCartoDownloader2018
 from .geotypes.legislativedistrict_lower_carto import LegislativeDistrictLowerCartoDownloader2018
+from .geotypes.legislativedistrict_upper_carto import LegislativeDistrictUpperCartoDownloader2018
+from .geotypes.countysubdivision_carto import CountySubdivisionCartoDownloader2018
 
 
 __all__ = (
@@ -20,5 +22,6 @@ __all__ = (
     "CountiesCartoDownloader2018",
     "CongressCartoDownloader2018",
     "StatesCartoDownloader2018",
-    "LegislativeDistrictLowerCartoDownloader2018"
+    "LegislativeDistrictLowerUpperCartoDownloader2018",
+    "CountySubdivisionCartoDownloader2018"
 )

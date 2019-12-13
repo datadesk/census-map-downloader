@@ -64,8 +64,22 @@ def states_carto(ctx):
 
 @cmd.command(help="Download cartographic state legislative districts(lower)")
 @click.pass_context
-def legislativedistrict_lower_carto(ctx):
+def legislative_lower_carto(ctx):
     obj = census_map_downloader.LegislativeDistrictLowerCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic state legislative districts(upper)")
+@click.pass_context
+def legislative_upper_carto(ctx):
+    obj = census_map_downloader.LegislativeDistrictUpperCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic county subdivisions")
+@click.pass_context
+def countysubdivision(ctx):
+    obj = census_map_downloader.CountySubdivisionCartoDownloader2018(data_dir=ctx.obj['data_dir'])
     obj.run()
 
 

@@ -8,11 +8,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StateLegislativeDistrictLowerCartoDownloader2018(BaseStateDownloader):
+class StateLegislativeDistrictUpperCartoDownloader2018(BaseStateDownloader):
     """
-    Download 2018 cartographic state legislative districts (lower chamber) for a single state.
+    Download 2018 cartographic state legislative districts (upper chamber) for a single state.
     """
-    PROCESSED_NAME = "legislative_district_lower_carto_2018"
+    PROCESSED_NAME = "legislative_district_upper_carto_2018"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
 		"STATEFP": "state_fips",
@@ -26,18 +26,18 @@ class StateLegislativeDistrictLowerCartoDownloader2018(BaseStateDownloader):
 
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_{self.state.fips}_sldl_500k.zip"
+        return f"https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_{self.state.fips}_sldu_500k.zip"
 
     @property
     def zip_name(self):
-        return f"cb_2018_{self.state.fips}_sldl_500k.zip"
+        return f"cb_2018_{self.state.fips}_sldu_500k.zip"
 
 
-class LegislativeDistrictLowerCartoDownloader2018(BaseStateListDownloader):
+class LegislativeDistrictUpperCartoDownloader2018(BaseStateListDownloader):
     """
-    Download all 2018 cartographic state legislative districts (lower chamber) in the United States.
+    Download all 2018 cartographic state legislative districts (upper chamber) in the United States.
     """
-    DOWNLOADER_CLASS = StateLegislativeDistrictLowerCartoDownloader2018
+    DOWNLOADER_CLASS = StateLegislativeDistrictUpperCartoDownloader2018
 
     def merge(self):
         """
