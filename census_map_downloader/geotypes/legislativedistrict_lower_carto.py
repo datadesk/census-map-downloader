@@ -8,17 +8,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class CountiesCartoDownloader2018(BaseDownloader):
+class LegislativeDistrictLowerCartoDownloader2018(BaseDownloader):
     """
-    Download 2018 cartographic counties.
+    Download cartographic state legislative districts (lower chamber).
     """
-    PROCESSED_NAME = "counties_carto_2018"
+    PROCESSED_NAME = "legislative_district_lower_carto_2018"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips",
-        "COUNTYFP": "county_fips",
+		"STATEFP": "state_fips",
         "GEOID": "geoid",
-        "NAME": "county_name",
+        "SLDSLST": "current_state_legislative_district_lower_code",
+        "LSY": "legislative_session_year",
+        "NAME": "name",
         "geometry": "geometry",
         "ALAND": "land_area",
         "AWATER": "water_area"
@@ -26,8 +27,8 @@ class CountiesCartoDownloader2018(BaseDownloader):
 
     @property
     def url(self):
-        return "https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_500k.zip"
+        return "https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_05_sldl_500k.zip"
 
     @property
     def zip_name(self):
-        return f"cb_2018_us_county_500k.zip"
+        return f"cb_2018_{self.state.fips}_sldl_500k.zip"

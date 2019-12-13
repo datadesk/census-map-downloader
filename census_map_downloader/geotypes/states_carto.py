@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class StatesCartoDownloader2018(BaseDownloader):
     """
-    Download counties.
+    Download 2018 cartographic states.
     """
     PROCESSED_NAME = "states_carto_2018"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
