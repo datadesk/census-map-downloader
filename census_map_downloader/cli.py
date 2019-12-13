@@ -41,6 +41,48 @@ def counties(ctx):
     obj.run()
 
 
+@cmd.command(help="Download cartographic counties")
+@click.pass_context
+def counties_carto(ctx):
+    obj = census_map_downloader.CountiesCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic congressional districts")
+@click.pass_context
+def congress_carto(ctx):
+    obj = census_map_downloader.CongressCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic states")
+@click.pass_context
+def states_carto(ctx):
+    obj = census_map_downloader.StatesCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic state legislative districts(lower)")
+@click.pass_context
+def legislative_lower_carto(ctx):
+    obj = census_map_downloader.LegislativeDistrictLowerCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic state legislative districts(upper)")
+@click.pass_context
+def legislative_upper_carto(ctx):
+    obj = census_map_downloader.LegislativeDistrictUpperCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic county subdivisions")
+@click.pass_context
+def countysubdivision(ctx):
+    obj = census_map_downloader.CountySubdivisionCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
 @cmd.command(help="Download ZCTAs")
 @click.pass_context
 def zctas(ctx):
