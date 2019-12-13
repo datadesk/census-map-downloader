@@ -41,6 +41,20 @@ def counties(ctx):
     obj.run()
 
 
+@cmd.command(help="Download cartographic counties")
+@click.pass_context
+def counties_carto(ctx):
+    obj = census_map_downloader.CountiesCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
+@cmd.command(help="Download cartographic congressional districts")
+@click.pass_context
+def congress_carto(ctx):
+    obj = census_map_downloader.CongressCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
 @cmd.command(help="Download ZCTAs")
 @click.pass_context
 def zctas(ctx):
