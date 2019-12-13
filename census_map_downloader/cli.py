@@ -55,6 +55,13 @@ def congress_carto(ctx):
     obj.run()
 
 
+@cmd.command(help="Download cartographic states")
+@click.pass_context
+def states_carto(ctx):
+    obj = census_map_downloader.StatesCartoDownloader2018(data_dir=ctx.obj['data_dir'])
+    obj.run()
+
+
 @cmd.command(help="Download ZCTAs")
 @click.pass_context
 def zctas(ctx):

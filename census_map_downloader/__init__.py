@@ -6,6 +6,7 @@ from .geotypes.zctas import ZctasDownloader2018
 from .geotypes.blocks import BlocksDownloader2018
 from .geotypes.counties_carto import CountiesCartoDownloader2018
 from .geotypes.congress_carto import CongressCartoDownloader2018
+from .geotypes.states_carto import StatesCartoDownloader2018
 
 
 __all__ = (
@@ -16,5 +17,6 @@ __all__ = (
     "ZctasDownloader2018",
     "BlocksDownloader2018",
     "CountiesCartoDownloader2018",
-    "CongressCartoDownloader2018"
+    "CongressCartoDownloader2018",
+    "StatesCartoDownloader2018"
 )
