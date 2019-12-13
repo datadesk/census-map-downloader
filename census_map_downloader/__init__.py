@@ -22,6 +22,7 @@ __all__ = (
     "CountiesCartoDownloader2018",
     "CongressCartoDownloader2018",
     "StatesCartoDownloader2018",
-    "LegislativeDistrictLowerUpperCartoDownloader2018",
+    "LegislativeDistrictLowerCartoDownloader2018",
+    "LegislativeDistrictUpperCartoDownloader2018",
     "CountySubdivisionCartoDownloader2018"
 )
