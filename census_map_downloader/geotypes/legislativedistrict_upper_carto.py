@@ -15,7 +15,7 @@ class StateLegislativeDistrictUpperCartoDownloader2018(BaseStateDownloader):
     PROCESSED_NAME = "legislative_district_upper_carto_2018"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
-		"STATEFP": "state_fips",
+        "STATEFP": "state_fips",
         "GEOID": "geoid",
         "LSY": "legislative_session_year",
         "NAME": "name",
