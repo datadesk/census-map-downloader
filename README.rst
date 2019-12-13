@@ -26,11 +26,17 @@ Command line usage
       --help           Show this message and exit.
 
     Commands:
-      counties  Download counties
-      places    Download places
-      tracts    Download tracts
-      zctas     Download ZCTAs
-      blocks    Download blocks
+    blocks                   Download blocks
+    congress-carto           Download cartographic congressional districts
+    counties                 Download counties
+    counties-carto           Download cartographic counties
+    countysubdivision        Download cartographic county subdivisions
+    legislative-lower-carto  Download cartographic state legislative...
+    legislative-upper-carto  Download cartographic state legislative...
+    places                   Download places
+    states-carto             Download cartographic states
+    tracts                   Download tracts
+    zctas                    Download ZCTAs
 
 Examples
 ------------------
