@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class LegislativeDistrictLowerCartoDownloader2018(BaseDownloader):
     """
-    Download cartographic state legislative districts (lower chamber).
+    Download 2018 cartographic state legislative districts (lower chamber).
     """
     PROCESSED_NAME = "legislative_district_lower_carto_2018"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
@@ -27,8 +27,16 @@ class LegislativeDistrictLowerCartoDownloader2018(BaseDownloader):
 
     @property
     def url(self):
-        return "https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_05_sldl_500k.zip"
+        return f"https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_{self.state.fips}_sldl_500k.zip"
 
     @property
     def zip_name(self):
         return f"cb_2018_{self.state.fips}_sldl_500k.zip"
+
+    @property
+    def zip_folder(self):
+        return f"{self.state.fips}_{self.state.name.upper().replace(' ', '_')}"
+
+    @property
+    def geojson_name(self):
+        return f"{self.PROCESSED_NAME}_{self.state.abbr.lower()}.geojson"
