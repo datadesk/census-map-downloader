@@ -31,8 +31,8 @@ Command line usage
     counties                 Download counties
     counties-carto           Download cartographic counties
     countysubdivision        Download cartographic county subdivisions
-    legislative-lower-carto  Download cartographic state legislative...
-    legislative-upper-carto  Download cartographic state legislative...
+    legislative-lower-carto  Download cartographic state legislative (lower chamber)
+    legislative-upper-carto  Download cartographic state legislative (upper chamber)
     places                   Download places
     states-carto             Download cartographic states
     tracts                   Download tracts
