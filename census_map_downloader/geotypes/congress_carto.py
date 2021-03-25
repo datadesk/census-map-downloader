@@ -19,7 +19,6 @@ class CongressCartoDownloader(BaseDownloader):
         "STATEFP": "state_fip",
         "CD116FP": "congresional_district",
         "GEOID": "geoid",
-        "NAMELSAD": "name",
         "geometry": "geometry",
         "LSAD": "legal_statistical_area",
         "CDSESSN": "congressional_session_code",
