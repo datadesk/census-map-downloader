@@ -44,7 +44,7 @@ class StateTractsDownloader2000(StateTractsDownloader2010):
         "COUNTYFP00": "county_fips",
         "TRACTCE00": "tract_id",
         "CTIDFP00": "geoid",
-        "NAME10": "tract_name",
+        "NAME00": "tract_name",
         "geometry": "geometry"
     })
 
@@ -73,8 +73,10 @@ class TractsDownloader(BaseStateListDownloader):
     PROCESSED_NAME = f"tracts"
 
     def __init__(self, data_dir=None, year=None):
-        # Delegate to separate classes depending on the year
-        # This approach avoids branching inside the property methods
+        # Delegate to separate classes depending on the year.
+        # This approach avoids branching inside the property methods of the
+        # downloader classes and allows differences in vintages to be defined
+        # in a more declarative way.
         if year == 2000:
             self.DOWNLOADER_CLASS = StateTractsDownloader2000
         else:
