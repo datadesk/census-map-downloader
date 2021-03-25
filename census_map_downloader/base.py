@@ -179,7 +179,18 @@ class BaseStateListDownloader(BaseDownloader):
         # Loop through all the states and download the shapes
         for state in us.STATES:
             logger.debug(f"Downloading {state}")
-            runner = self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir, year=self.year)
+            try:
+                runner = self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir, year=self.year)
+            except ValueError as e:
+                # Creating the downloader class instance for the state raised
+                # a `ValueError`. This is usually because the geotype isn't
+                # supported for a particular state. For example, Nebraska
+                # only has one chamber, so there's no file for the lower
+                # cabinet.
+                # Log this issue and keep going with the other states.
+                logger.warning(e)
+                continue
+
             runner.run()
 
     def merge(self):

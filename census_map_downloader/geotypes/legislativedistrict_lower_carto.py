@@ -25,6 +25,13 @@ class StateLegislativeDistrictLowerCartoDownloader(BaseStateDownloader):
         "AWATER": "water_area"
     })
 
+    def __init__(self, state, data_dir, year):
+        if state == "NE":
+            # Nebraska has a unicameral legislature
+            raise ValueError(f"State {state} is not supported for this geotype")
+
+        super().__init__(state, data_dir, year)
+
     @property
     def url(self):
         return f"https://www2.census.gov/geo/tiger/GENZ{self.year}/shp/cb_{self.year}_{self.state.fips}_sldl_500k.zip"
