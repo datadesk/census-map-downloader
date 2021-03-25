@@ -12,7 +12,18 @@ class CountiesDownloader(BaseDownloader):
     """
     Download counties.
     """
-    YEAR_LIST = [2018]
+    YEAR_LIST = [
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+    ]
     PROCESSED_NAME = "counties"
     # Docs pg 21 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({

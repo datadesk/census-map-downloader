@@ -12,7 +12,14 @@ class CountiesCartoDownloader(BaseDownloader):
     """
     Download cartographic counties.
     """
-    YEAR_LIST = [2018]
+    YEAR_LIST = [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+    ]
     PROCESSED_NAME = "counties_carto"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
