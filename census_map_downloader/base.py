@@ -13,15 +13,26 @@ logger = logging.getLogger(__name__)
 
 
 class BaseDownloader(object):
+    YEAR_LIST = [2018]
     THIS_DIR = pathlib.Path(__file__).parent
     PARENT_DIR = THIS_DIR.parent
 
-    def __init__(self, data_dir=None):
+    def __init__(self, data_dir=None, year=None):
         # Set the download directory
         if data_dir:
             self.data_dir = pathlib.Path(str(data_dir))
         else:
             self.data_dir = self.PARENT_DIR.joinpath("data")
+
+        if year is None:
+            # If year is not specified, use the most recent year
+            self.year = self.YEAR_LIST[-1]
+        else:
+            self.year = year
+
+        # Validate the year
+        if self.year not in self.YEAR_LIST:
+            raise NotImplementedError("This year is not supported for this geotype")
 
         # Initialize all the directories we will need
         if not self.data_dir.exists():
@@ -74,7 +85,7 @@ class BaseDownloader(object):
         """
         The name of the target GeoJSON created by this downloader.
         """
-        return f'{self.PROCESSED_NAME}.geojson'
+        return f'{self.PROCESSED_NAME}_{self.year}.geojson'
 
     @property
     def geojson_path(self):
@@ -138,14 +149,14 @@ class BaseStateDownloader(BaseDownloader):
     """
     A base downloader for a single state's source files.
     """
-    def __init__(self, state, data_dir):
+    def __init__(self, state, data_dir, year):
         # Configure the state
         self.state = us.states.lookup(state)
-        super().__init__(data_dir)
+        super().__init__(data_dir, year)
 
     @property
     def geojson_name(self):
-        return f"{self.PROCESSED_NAME}_{self.state.abbr.lower()}.geojson"
+        return f"{self.PROCESSED_NAME}_{self.year}_{self.state.abbr.lower()}.geojson"
 
 
 class BaseStateListDownloader(BaseDownloader):
@@ -162,13 +173,13 @@ class BaseStateListDownloader(BaseDownloader):
         """
         The location of all the source shapefiles merged together.
         """
-        return self.raw_dir.joinpath(f"{self.PROCESSED_NAME}.shp")
+        return self.raw_dir.joinpath(f"{self.PROCESSED_NAME}_{self.year}.shp")
 
     def download(self):
         # Loop through all the states and download the shapes
         for state in us.STATES:
             logger.debug(f"Downloading {state}")
-            runner = self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir)
+            runner = self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir, year=self.year)
             runner.run()
 
     def merge(self):
@@ -181,7 +192,7 @@ class BaseStateListDownloader(BaseDownloader):
 
         # Open all the shapes
         path_list = [
-            self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir).shp_path
+            self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir, year=self.year).shp_path
             for state in us.STATES
         ]
         df_list = [gpd.read_file(p) for p in path_list]

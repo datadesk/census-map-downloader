@@ -8,12 +8,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StatePlacesDownloader2018(BaseStateDownloader):
+class StatePlacesDownloader(BaseStateDownloader):
     """
-    Download 2018 places for a single state.
+    Download places for a single state.
     """
-    YEAR = 2018
-    PROCESSED_NAME = f"places_{YEAR}"
+    YEAR_LIST = [2018]
+    PROCESSED_NAME = "places"
     # Page 47 https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
@@ -25,17 +25,17 @@ class StatePlacesDownloader2018(BaseStateDownloader):
 
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/PLACE/tl_{self.YEAR}_{self.state.fips}_place.zip"
+        return f"https://www2.census.gov/geo/tiger/TIGER{self.year}/PLACE/tl_{self.year}_{self.state.fips}_place.zip"
 
     @property
     def zip_name(self):
-        return f"tl_{self.YEAR}_{self.state.fips}_place.zip"
+        return f"tl_{self.year}_{self.state.fips}_place.zip"
 
 
-class PlacesDownloader2018(BaseStateListDownloader):
+class PlacesDownloader(BaseStateListDownloader):
     """
-    Download all 2018 places in the United States.
+    Download all places in the United States.
     """
-    YEAR = 2018
-    PROCESSED_NAME = f"places_{YEAR}"
-    DOWNLOADER_CLASS = StatePlacesDownloader2018
+    YEAR_LIST = [2018]
+    PROCESSED_NAME = "places"
+    DOWNLOADER_CLASS = StatePlacesDownloader

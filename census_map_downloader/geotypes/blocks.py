@@ -8,12 +8,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StateBlocksDownloader2018(BaseStateDownloader):
+class StateBlocksDownloader(BaseStateDownloader):
     """
-    Download 2018 blocks for a single state.
+    Download blocks for a single state.
     """
-    YEAR = 2018
-    PROCESSED_NAME = f"blocks_{YEAR}"
+    YEAR_LIST = [2018]
+    PROCESSED_NAME = f"blocks"
     # Docs pg 14 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP10": "state_fips",
@@ -26,18 +26,19 @@ class StateBlocksDownloader2018(BaseStateDownloader):
 
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/TIGER{self.YEAR}/TABBLOCK/tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
+        return f"https://www2.census.gov/geo/tiger/TIGER{self.year}/TABBLOCK/tl_{self.year}_{self.state.fips}_tabblock10.zip"
 
     @property
     def zip_name(self):
-        return f"tl_{self.YEAR}_{self.state.fips}_tabblock10.zip"
+        return f"tl_{self.year}_{self.state.fips}_tabblock10.zip"
 
 
-class BlocksDownloader2018(BaseStateListDownloader):
+class BlocksDownloader(BaseStateListDownloader):
     """
-    Download all 2018 blocks in the United States.
+    Download all blocks in the United States.
     """
-    DOWNLOADER_CLASS = StateBlocksDownloader2018
+    YEAR_LIST = [2018]
+    DOWNLOADER_CLASS = StateBlocksDownloader
 
     def merge(self):
         """
