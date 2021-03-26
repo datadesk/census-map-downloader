@@ -6,6 +6,15 @@ import unittest
 import census_map_downloader
 
 
+class BaseDownloaderTestCase(unittest.TestCase):
+
+    def test_init_unsupported_year(self):
+        """Test that constructor raises an exception for an unsupported year"""
+
+        with self.assertRaises(ValueError):
+            census_map_downloader.BaseDownloader(year=1900)
+
+
 class CountiesDownloaderTestCase(unittest.TestCase):
 
     def setUp(self):

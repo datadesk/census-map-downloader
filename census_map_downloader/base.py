@@ -32,7 +32,7 @@ class BaseDownloader(object):
 
         # Validate the year
         if self.year not in self.YEAR_LIST:
-            raise NotImplementedError("This year is not supported for this geotype")
+            raise ValueError("This year is not supported for this geotype")
 
         # Initialize all the directories we will need
         if not self.data_dir.exists():
