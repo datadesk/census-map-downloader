@@ -13,7 +13,7 @@ class StateBlocksDownloader(BaseStateDownloader):
     Download blocks for a single state.
     """
     YEAR_LIST = [2018]
-    PROCESSED_NAME = f"blocks"
+    PROCESSED_NAME = "blocks"
     # Docs pg 14 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP10": "state_fips",

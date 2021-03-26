@@ -70,7 +70,7 @@ class TractsDownloader(BaseStateListDownloader):
     Download all 2000 tracts in the United States.
     """
     YEAR_LIST = [2000, 2010]
-    PROCESSED_NAME = f"tracts"
+    PROCESSED_NAME = "tracts"
 
     def __init__(self, data_dir=None, year=None):
         # Delegate to separate classes depending on the year.
