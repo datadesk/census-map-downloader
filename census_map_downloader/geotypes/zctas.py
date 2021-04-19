@@ -16,7 +16,17 @@ class ZctasDownloader(BaseDownloader):
     """
     Download 5-digit ZIP Code Tabulation Area
     """
-    YEAR_LIST = [2018]
+    YEAR_LIST = [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+    ]
     # Docs pg 62 https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf
     PROCESSED_NAME = "zctas"
     FIELD_CROSSWALK = collections.OrderedDict({
