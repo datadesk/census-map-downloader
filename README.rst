@@ -67,7 +67,7 @@ Ship new version to PyPI ::
 Adding additional years to a dataset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Downloader classes for different geography types are defined in modules of :code:`census_map_downloader.geotypes`. For example, the downloader for countie is :code:`census_map_downloader.geotypes.counties.CountiesDownloader`.
+Downloader classes for different geography types are defined in modules of :code:`census_map_downloader.geotypes`. For example, the downloader for counties is :code:`census_map_downloader.geotypes.counties.CountiesDownloader`.
 
 If the URL and fields in a shapefile are the same as those for years that are already supported, you can just add the year to the :code:`YEAR_LIST` attribute.
 
