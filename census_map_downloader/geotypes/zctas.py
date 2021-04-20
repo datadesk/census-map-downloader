@@ -12,13 +12,23 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ZctasDownloader2018(BaseDownloader):
+class ZctasDownloader(BaseDownloader):
     """
     Download 5-digit ZIP Code Tabulation Area
     """
-    YEAR = 2018
+    YEAR_LIST = [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+    ]
     # Docs pg 62 https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf
-    PROCESSED_NAME = f"zctas_{YEAR}"
+    PROCESSED_NAME = "zctas"
     FIELD_CROSSWALK = collections.OrderedDict({
         "GEOID10": "geoid",
         "geometry": "geometry"
@@ -26,11 +36,11 @@ class ZctasDownloader2018(BaseDownloader):
 
     @property
     def url(self):
-        return "https://www2.census.gov/geo/tiger/TIGER2018/ZCTA5/tl_2018_us_zcta510.zip"
+        return f"https://www2.census.gov/geo/tiger/TIGER{self.year}/ZCTA5/tl_{self.year}_us_zcta510.zip"
 
     @property
     def zip_name(self):
-        return f"tl_2018_us_zcta510.zip"
+        return f"tl_{self.year}_us_zcta510.zip"
 
         # Add a raw download path for the relationships files
     @property

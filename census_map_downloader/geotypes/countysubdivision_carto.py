@@ -8,11 +8,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StateCountySubdivisionCartoDownloader2018(BaseStateDownloader):
+class StateCountySubdivisionCartoDownloader(BaseStateDownloader):
     """
-    Download 2018 cartographic county subdivisions for a single state.
+    Download cartographic county subdivisions for a single state.
     """
-    PROCESSED_NAME = "county_subdivision_carto_2018"
+    YEAR_LIST = [2018]
+    PROCESSED_NAME = "county_subdivision_carto"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
@@ -27,18 +28,19 @@ class StateCountySubdivisionCartoDownloader2018(BaseStateDownloader):
 
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_{self.state.fips}_cousub_500k.zip"
+        return f"https://www2.census.gov/geo/tiger/GENZ{self.year}/shp/cb_{self.year}_{self.state.fips}_cousub_500k.zip"
 
     @property
     def zip_name(self):
-        return f"cb_2018_{self.state.fips}_cousub_500k.zip"
+        return f"cb_{self.year}_{self.state.fips}_cousub_500k.zip"
 
 
-class CountySubdivisionCartoDownloader2018(BaseStateListDownloader):
+class CountySubdivisionCartoDownloader(BaseStateListDownloader):
     """
-    Download all 2018 cartographic county subdivisions in the United States.
+    Download all cartographic county subdivisions in the United States.
     """
-    DOWNLOADER_CLASS = StateCountySubdivisionCartoDownloader2018
+    YEAR_LIST = [2018]
+    DOWNLOADER_CLASS = StateCountySubdivisionCartoDownloader
 
     def merge(self):
         """

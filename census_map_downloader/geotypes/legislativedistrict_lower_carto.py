@@ -8,11 +8,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class StateLegislativeDistrictLowerCartoDownloader2018(BaseStateDownloader):
+class StateLegislativeDistrictLowerCartoDownloader(BaseStateDownloader):
     """
-    Download 2018 cartographic state legislative districts (lower chamber) for a single state.
+    Download cartographic state legislative districts (lower chamber) for a single state.
     """
-    PROCESSED_NAME = "legislative_district_lower_carto_2018"
+    YEAR_LIST = [2018]
+    PROCESSED_NAME = "legislative_district_lower_carto"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
     FIELD_CROSSWALK = collections.OrderedDict({
         "STATEFP": "state_fips",
@@ -24,20 +25,28 @@ class StateLegislativeDistrictLowerCartoDownloader2018(BaseStateDownloader):
         "AWATER": "water_area"
     })
 
+    def __init__(self, state, data_dir, year):
+        if state == "NE":
+            # Nebraska has a unicameral legislature
+            raise ValueError(f"State {state} is not supported for this geotype")
+
+        super().__init__(state, data_dir, year)
+
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_{self.state.fips}_sldl_500k.zip"
+        return f"https://www2.census.gov/geo/tiger/GENZ{self.year}/shp/cb_{self.year}_{self.state.fips}_sldl_500k.zip"
 
     @property
     def zip_name(self):
-        return f"cb_2018_{self.state.fips}_sldl_500k.zip"
+        return f"cb_{self.year}_{self.state.fips}_sldl_500k.zip"
 
 
-class LegislativeDistrictLowerCartoDownloader2018(BaseStateListDownloader):
+class LegislativeDistrictLowerCartoDownloader(BaseStateListDownloader):
     """
-    Download all 2018 cartographic state legislative districts (lower chamber) in the United States.
+    Download all cartographic state legislative districts (lower chamber) in the United States.
     """
-    DOWNLOADER_CLASS = StateLegislativeDistrictLowerCartoDownloader2018
+    YEAR_LIST = [2018]
+    DOWNLOADER_CLASS = StateLegislativeDistrictLowerCartoDownloader
 
     def merge(self):
         """
