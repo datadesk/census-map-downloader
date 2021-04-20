@@ -90,10 +90,6 @@ class StateTractsDownloader2011To2020(BaseStateDownloader):
 
     @property
     def url(self):
-        return self.state.shapefile_urls("tract")
-
-    @property
-    def url(self):
         return f"https://www2.census.gov/geo/tiger/TIGER{self.year}/TRACT/{self.zip_name}"
 
     @property
