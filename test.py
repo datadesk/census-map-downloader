@@ -31,7 +31,6 @@ class CountiesDownloaderTestCase(unittest.TestCase):
         """
         Test that a default year attribute is set when no year is passed to
         constructor
-
         """
         downloader = census_map_downloader.CountiesDownloader()
         self.assertEqual(downloader.year, self.MOST_RECENT_YEAR)
@@ -40,7 +39,6 @@ class CountiesDownloaderTestCase(unittest.TestCase):
         """
         Test that the year attribute is set to the year passed to the
         constructor
-
         """
         downloader = census_map_downloader.CountiesDownloader(year=2018)
         self.assertEqual(downloader.year, 2018)
@@ -49,7 +47,6 @@ class CountiesDownloaderTestCase(unittest.TestCase):
         """
         Test that the download URL reflects the default year when no year is
         passed to thee constructor
-
         """
         downloader = census_map_downloader.CountiesDownloader()
         self.assertTrue(str(self.MOST_RECENT_YEAR) in downloader.url)
@@ -57,7 +54,6 @@ class CountiesDownloaderTestCase(unittest.TestCase):
     def test_url_specify_year(self):
         """
         Test that the download URL reflects the year passed to the constructor
-
         """
         downloader = census_map_downloader.CountiesDownloader(year=2018)
         self.assertTrue("2018" in downloader.url)
