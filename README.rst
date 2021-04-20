@@ -23,23 +23,26 @@ Command line usage
 
     Options:
       --data-dir TEXT  The folder where you want to download the data
+      --year INTEGER   The vintage of data to download. By default it gets the
+                       latest year. Not all data are available for every year.
+
       --help           Show this message and exit.
 
     Commands:
-    blocks                   Download blocks
-    congress-carto           Download cartographic congressional districts
-    counties                 Download counties
-    counties-carto           Download cartographic counties
-    countysubdivision        Download cartographic county subdivisions
-    legislative-lower-carto  Download cartographic state legislative (lower chamber)
-    legislative-upper-carto  Download cartographic state legislative (upper chamber)
-    places                   Download places
-    states-carto             Download cartographic states
-    tracts                   Download tracts
-    zctas                    Download ZCTAs
+      blocks                   Download blocks
+      congress-carto           Download cartographic congressional districts
+      counties                 Download counties
+      counties-carto           Download cartographic counties
+      countysubdivision        Download cartographic county subdivisions
+      legislative-lower-carto  Download cartographic state legislative...
+      legislative-upper-carto  Download cartographic state legislative...
+      places                   Download places
+      states-carto             Download cartographic states
+      tracts                   Download tracts
+      zctas                    Download ZCTAs
 
 Examples
-------------------
+--------
 
 Here's an example of downloading all counties ::
 
