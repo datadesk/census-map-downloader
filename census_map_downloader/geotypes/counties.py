@@ -1,10 +1,11 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
 import collections
-from census_map_downloader.base import BaseDownloader
 
 # Logging
 import logging
+
+from census_map_downloader.base import BaseDownloader
+
 logger = logging.getLogger(__name__)
 
 
@@ -12,6 +13,7 @@ class CountiesDownloader(BaseDownloader):
     """
     Download counties.
     """
+
     YEAR_LIST = [
         2011,
         2012,
@@ -26,13 +28,15 @@ class CountiesDownloader(BaseDownloader):
     ]
     PROCESSED_NAME = "counties"
     # Docs pg 21 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
-    FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips",
-        "COUNTYFP": "county_fips",
-        "GEOID": "geoid",
-        "NAME": "county_name",
-        "geometry": "geometry"
-    })
+    FIELD_CROSSWALK = collections.OrderedDict(
+        {
+            "STATEFP": "state_fips",
+            "COUNTYFP": "county_fips",
+            "GEOID": "geoid",
+            "NAME": "county_name",
+            "geometry": "geometry",
+        }
+    )
 
     @property
     def url(self):

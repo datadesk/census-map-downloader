@@ -1,10 +1,11 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
 import collections
-from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
 
 # Logging
 import logging
+
+from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
+
 logger = logging.getLogger(__name__)
 
 
@@ -12,19 +13,22 @@ class StateCountySubdivisionCartoDownloader(BaseStateDownloader):
     """
     Download cartographic county subdivisions for a single state.
     """
+
     YEAR_LIST = [2018]
     PROCESSED_NAME = "county_subdivision_carto"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
-    FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips",
-        "COUNTYFP": "county_fips",
-        "COUSUBFP": "county_subdivision_fips",
-        "GEOID": "geoid",
-        "NAME": "name",
-        "geometry": "geometry",
-        "ALAND": "land_area",
-        "AWATER": "water_area"
-    })
+    FIELD_CROSSWALK = collections.OrderedDict(
+        {
+            "STATEFP": "state_fips",
+            "COUNTYFP": "county_fips",
+            "COUSUBFP": "county_subdivision_fips",
+            "GEOID": "geoid",
+            "NAME": "name",
+            "geometry": "geometry",
+            "ALAND": "land_area",
+            "AWATER": "water_area",
+        }
+    )
 
     @property
     def url(self):
@@ -39,6 +43,7 @@ class CountySubdivisionCartoDownloader(BaseStateListDownloader):
     """
     Download all cartographic county subdivisions in the United States.
     """
+
     YEAR_LIST = [2018]
     DOWNLOADER_CLASS = StateCountySubdivisionCartoDownloader
 

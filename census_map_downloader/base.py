@@ -1,18 +1,18 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
-import time
-import us
-import pathlib
-import zipfile
-import geopandas as gpd
-from urllib.request import urlretrieve
-
 # Logging
 import logging
+import pathlib
+import time
+import zipfile
+from urllib.request import urlretrieve
+
+import geopandas as gpd
+import us
+
 logger = logging.getLogger(__name__)
 
 
-class BaseDownloader(object):
+class BaseDownloader:
     YEAR_LIST = [2018]
     THIS_DIR = pathlib.Path(__file__).parent
     PARENT_DIR = THIS_DIR.parent
@@ -57,7 +57,9 @@ class BaseDownloader(object):
         """
         The name of the source zipfile
         """
-        raise NotImplementedError("All geotype subclasses must provide their own zip_name property.")
+        raise NotImplementedError(
+            "All geotype subclasses must provide their own zip_name property."
+        )
 
     @property
     def zip_path(self):
@@ -85,7 +87,7 @@ class BaseDownloader(object):
         """
         The name of the target GeoJSON created by this downloader.
         """
-        return f'{self.PROCESSED_NAME}_{self.year}.geojson'
+        return f"{self.PROCESSED_NAME}_{self.year}.geojson"
 
     @property
     def geojson_path(self):
@@ -149,6 +151,7 @@ class BaseStateDownloader(BaseDownloader):
     """
     A base downloader for a single state's source files.
     """
+
     def __init__(self, state, data_dir, year):
         # Configure the state
         self.state = us.states.lookup(state)
@@ -163,6 +166,7 @@ class BaseStateListDownloader(BaseDownloader):
     """
     A base downloader that will retrieve all 50 states.
     """
+
     def run(self):
         self.download()
         self.merge()
@@ -180,7 +184,9 @@ class BaseStateListDownloader(BaseDownloader):
         for state in us.STATES:
             logger.debug(f"Downloading {state}")
             try:
-                runner = self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir, year=self.year)
+                runner = self.DOWNLOADER_CLASS(
+                    state.abbr, data_dir=self.data_dir, year=self.year
+                )
             except ValueError as e:
                 # Creating the downloader class instance for the state raised
                 # a `ValueError`. This is usually because the geotype isn't
@@ -203,7 +209,9 @@ class BaseStateListDownloader(BaseDownloader):
 
         # Open all the shapes
         path_list = [
-            self.DOWNLOADER_CLASS(state.abbr, data_dir=self.data_dir, year=self.year).shp_path
+            self.DOWNLOADER_CLASS(
+                state.abbr, data_dir=self.data_dir, year=self.year
+            ).shp_path
             for state in us.STATES
         ]
         df_list = [gpd.read_file(p) for p in path_list]

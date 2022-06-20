@@ -1,10 +1,11 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
 import collections
-from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
 
 # Logging
 import logging
+
+from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
+
 logger = logging.getLogger(__name__)
 
 
@@ -12,18 +13,21 @@ class StateLegislativeDistrictUpperCartoDownloader(BaseStateDownloader):
     """
     Download cartographic state legislative districts (upper chamber) for a single state.
     """
+
     YEAR_LIST = [2018]
     PROCESSED_NAME = "legislative_district_upper_carto"
     # Docs (https://www2.census.gov/geo/tiger/GENZ2018/2018_file_name_def.pdf?#)
-    FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips",
-        "GEOID": "geoid",
-        "LSY": "legislative_session_year",
-        "NAME": "name",
-        "geometry": "geometry",
-        "ALAND": "land_area",
-        "AWATER": "water_area"
-    })
+    FIELD_CROSSWALK = collections.OrderedDict(
+        {
+            "STATEFP": "state_fips",
+            "GEOID": "geoid",
+            "LSY": "legislative_session_year",
+            "NAME": "name",
+            "geometry": "geometry",
+            "ALAND": "land_area",
+            "AWATER": "water_area",
+        }
+    )
 
     @property
     def url(self):
@@ -38,6 +42,7 @@ class LegislativeDistrictUpperCartoDownloader(BaseStateListDownloader):
     """
     Download all cartographic state legislative districts (upper chamber) in the United States.
     """
+
     YEAR_LIST = [2018]
     DOWNLOADER_CLASS = StateLegislativeDistrictUpperCartoDownloader
 

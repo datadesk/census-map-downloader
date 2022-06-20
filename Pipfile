@@ -6,7 +6,10 @@ verify_ssl = true
 [dev-packages]
 twine = "*"
 flake8 = "*"
-coverage = "*"
+setuptools-scm = "*"
+pre-commit = "*"
+sphinx = "*"
+myst-parser = "*"
 jupyterlab = "*"
 descartes = "*"
 matplotlib = "*"
@@ -17,4 +20,4 @@ us = "*"
 click = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"

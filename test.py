@@ -1,13 +1,12 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
-from pathlib import Path
 import shutil
 import unittest
+from pathlib import Path
+
 import census_map_downloader
 
 
 class BaseDownloaderTestCase(unittest.TestCase):
-
     def test_init_unsupported_year(self):
         """Test that constructor raises an exception for an unsupported year"""
 
@@ -16,10 +15,9 @@ class BaseDownloaderTestCase(unittest.TestCase):
 
 
 class CountiesDownloaderTestCase(unittest.TestCase):
-
     def setUp(self):
         self.MOST_RECENT_YEAR = 2020
-        self.DATA_DIR = Path(__file__).resolve().parent / 'test-data'
+        self.DATA_DIR = Path(__file__).resolve().parent / "test-data"
 
         self.DATA_DIR.mkdir(exist_ok=True)
 
@@ -68,16 +66,20 @@ class CountiesDownloaderTestCase(unittest.TestCase):
         # various classes and methods to detect whether things like
         # urlretrive() are called. We don't need to test their
         # functionality.
-        downloader = census_map_downloader.CountiesDownloader(
-            data_dir=self.DATA_DIR
-        )
+        downloader = census_map_downloader.CountiesDownloader(data_dir=self.DATA_DIR)
         downloader.run()
 
-        shapefile_zip_path = self.DATA_DIR / "raw" / f"tl_{self.MOST_RECENT_YEAR}_us_county.zip"
+        shapefile_zip_path = (
+            self.DATA_DIR / "raw" / f"tl_{self.MOST_RECENT_YEAR}_us_county.zip"
+        )
         self.assertTrue(shapefile_zip_path.is_file())
-        shapefile_path = self.DATA_DIR / "raw" / f"tl_{self.MOST_RECENT_YEAR}_us_county.shp"
+        shapefile_path = (
+            self.DATA_DIR / "raw" / f"tl_{self.MOST_RECENT_YEAR}_us_county.shp"
+        )
         self.assertTrue(shapefile_path.is_file())
-        geojson_path = self.DATA_DIR / "processed" / f"counties_{self.MOST_RECENT_YEAR}.geojson"
+        geojson_path = (
+            self.DATA_DIR / "processed" / f"counties_{self.MOST_RECENT_YEAR}.geojson"
+        )
         self.assertTrue(geojson_path.is_file())
 
     def test_run_specify_year(self):
@@ -92,8 +94,7 @@ class CountiesDownloaderTestCase(unittest.TestCase):
         # functionality.
         year = 2018
         downloader = census_map_downloader.CountiesDownloader(
-            data_dir=self.DATA_DIR,
-            year=year
+            data_dir=self.DATA_DIR, year=year
         )
         downloader.run()
 
@@ -105,5 +106,5 @@ class CountiesDownloaderTestCase(unittest.TestCase):
         self.assertTrue(geojson_path.is_file())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

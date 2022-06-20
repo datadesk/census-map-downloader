@@ -1,10 +1,11 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
 import collections
-from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
 
 # Logging
 import logging
+
+from census_map_downloader.base import BaseStateDownloader, BaseStateListDownloader
+
 logger = logging.getLogger(__name__)
 
 
@@ -12,17 +13,20 @@ class StateTractsDownloader2010(BaseStateDownloader):
     """
     Download 2010 tracts for a single state.
     """
+
     YEAR_LIST = [2010]
     PROCESSED_NAME = "tracts"
     # Docs pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
-    FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP10": "state_fips",
-        "COUNTYFP10": "county_fips",
-        "TRACTCE10": "tract_id",
-        "GEOID10": "geoid",
-        "NAME10": "tract_name",
-        "geometry": "geometry"
-    })
+    FIELD_CROSSWALK = collections.OrderedDict(
+        {
+            "STATEFP10": "state_fips",
+            "COUNTYFP10": "county_fips",
+            "TRACTCE10": "tract_id",
+            "GEOID10": "geoid",
+            "NAME10": "tract_name",
+            "geometry": "geometry",
+        }
+    )
 
     @property
     def url(self):
@@ -37,16 +41,19 @@ class StateTractsDownloader2000(StateTractsDownloader2010):
     """
     Download 2000 tracts for a single state.
     """
+
     YEAR_LIST = [2000]
     # Docs pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2010/TGRSHP10SF1.pdf)
-    FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP00": "state_fips",
-        "COUNTYFP00": "county_fips",
-        "TRACTCE00": "tract_id",
-        "CTIDFP00": "geoid",
-        "NAME00": "tract_name",
-        "geometry": "geometry"
-    })
+    FIELD_CROSSWALK = collections.OrderedDict(
+        {
+            "STATEFP00": "state_fips",
+            "COUNTYFP00": "county_fips",
+            "TRACTCE00": "tract_id",
+            "CTIDFP00": "geoid",
+            "NAME00": "tract_name",
+            "geometry": "geometry",
+        }
+    )
 
     @property
     def url(self):
@@ -65,6 +72,7 @@ class StateTractsDownloader2011To2020(BaseStateDownloader):
     """
     Download 2011-2020 tracts for a single state.
     """
+
     YEAR_LIST = [
         2011,
         2012,
@@ -79,18 +87,22 @@ class StateTractsDownloader2011To2020(BaseStateDownloader):
     ]
     PROCESSED_NAME = "tracts"
     # Docs pg 57 (https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2018/TGRSHP2018_TechDoc_Ch3.pdf)
-    FIELD_CROSSWALK = collections.OrderedDict({
-        "STATEFP": "state_fips",
-        "COUNTYFP": "county_fips",
-        "TRACTCE": "tract_id",
-        "GEOID": "geoid",
-        "NAME": "tract_name",
-        "geometry": "geometry"
-    })
+    FIELD_CROSSWALK = collections.OrderedDict(
+        {
+            "STATEFP": "state_fips",
+            "COUNTYFP": "county_fips",
+            "TRACTCE": "tract_id",
+            "GEOID": "geoid",
+            "NAME": "tract_name",
+            "geometry": "geometry",
+        }
+    )
 
     @property
     def url(self):
-        return f"https://www2.census.gov/geo/tiger/TIGER{self.year}/TRACT/{self.zip_name}"
+        return (
+            f"https://www2.census.gov/geo/tiger/TIGER{self.year}/TRACT/{self.zip_name}"
+        )
 
     @property
     def zip_name(self):
@@ -105,6 +117,7 @@ class TractsDownloader(BaseStateListDownloader):
     """
     Download all 2000 tracts in the United States.
     """
+
     YEAR_LIST = [
         2000,
         2010,
