@@ -42,7 +42,8 @@ def local_version(version):
 setup(
     name="census-map-downloader",
     description="Easily download U.S. census maps",
-    long_description=read("README.rst"),
+    long_description=read("README.md"),
+    long_description_content_type="text/markdown",
     author="Ben Welsh",
     author_email="b@palewi.re",
     url="https://palewi.re/docs/census-map-downloader",
