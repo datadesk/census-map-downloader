@@ -2,11 +2,6 @@
 
 Easily download U.S. census maps
 
-```{contents} Table of contents
-:local:
-:depth: 2
-```
-
 ## Installation
 
 ```bash
